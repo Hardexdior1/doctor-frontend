@@ -55,7 +55,7 @@ const PastDoctors = ({ pastDoctors,setActiveTab }) => {
                 />
                 <div className="flex flex-col gap-1 py-3 px-3">
                   <h3 className="text-lg font-bold md:text-xl">
-                    {doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}
+                    {doc.name.charAt(0).toUpperCase() + doc.name.slice(1)} 
                   </h3>
                   <h4 className="text-[#207dff] font-medium">{doc.specialty}</h4>
                   <p className="text-gray-600 text-sm line-clamp-3">{doc.bio}</p>

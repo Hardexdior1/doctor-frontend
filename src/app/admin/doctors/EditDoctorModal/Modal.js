@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Modal = ({ handleToggleModal, doctor }) => {
+const Modal = ({ handleToggleModal, doctor,setDoctors,doctors }) => {
   const [formData, setFormData] = useState({
     name: doctor.name || "",
     email: doctor.email || "",
@@ -15,6 +15,7 @@ const Modal = ({ handleToggleModal, doctor }) => {
     bio: doctor.bio || "",
     availableDays: doctor.availableDays || [],
     image: null,
+    isActive:doctor.isActive,
   });
 
   const [loading, setLoading] = useState(false); 
@@ -38,7 +39,8 @@ const Modal = ({ handleToggleModal, doctor }) => {
 }
   const handleFormChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+      const newValue = name === "isActive" ? value === "true" : value;
+    setFormData({ ...formData, [name]: newValue });
   };
  
 
@@ -55,6 +57,8 @@ const updatedDoctorData = new FormData();
     updatedDoctorData.append("bio",formData.bio)
     updatedDoctorData.append("availableDays", formData.availableDays); 
     updatedDoctorData.append("image", formData.image);
+        updatedDoctorData.append("isActive", formData.isActive);
+
 
     
 
@@ -65,18 +69,26 @@ const updatedDoctorData = new FormData();
         },
       });
       toast.success(res.data.message || "Doctor updated successfully!");
+console.log('omo',res?.data?.doctor)
+      // window.location.reload(); // Reload the page to show updated doctor data
+      setDoctors((prevDoctors)=>
+prevDoctors.map((doc)=>
+doc._id===res?.data?.doctor._id?res.data.doctor:doc
+)
+      )
 
-      window.location.reload(); // Reload the page to show updated doctor data
 
+handleToggleModal()
     } catch (error) {
       console.log("Error updating doctor:", error);
-      toast.error(error.data.message || "unable to edit doctor ,Something wen wrong!");
+      toast.error(error?.data?.message|| "unable to edit doctor ,Something wen wrong!");
 
     } finally {
       setLoading(false); 
     }
   };
 
+  
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
         <ToastContainer />
@@ -173,7 +185,35 @@ const updatedDoctorData = new FormData();
               ))}
             </div>
           </div>
+<div className="mb-4">
+  <div className="flex gap-4">
+  <label className="flex items-center gap-1">
+    <input
+      type="radio"
+      name="isActive"
+      value="true"
+      checked={formData.isActive === true}
+      onChange={ handleFormChange}
+     
+    />
+    Active
+  </label>
 
+  <label className="flex items-center gap-1">
+    <input
+      type="radio"
+      name="isActive"
+      value="false"
+      checked={formData.isActive === false}
+            onChange={ handleFormChange}
+      // onChange={(e) => setIsActive(e.target.value === "true")}
+    />
+    Not Active
+  </label>
+</div>
+
+
+</div>
         
 
           <div className="mb-4">

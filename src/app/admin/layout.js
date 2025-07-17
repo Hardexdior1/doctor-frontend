@@ -7,16 +7,43 @@ import {Admin_Routes} from './config/adminroutes'
 import { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
-
+// import { useParams } from 'next/navigation';
 const AdminLayout = ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+
+
+
+  const [isCollapsed] = useState(false);
 const [mobileOpen, setMobileOpen] = useState(false);
 const pathname = usePathname();
-
-const {user}=useAuth()
+const showBackToDashboard = pathname !== "/admin"
+const {user,handleLogout,loadingLogOut,showLogOut,setShowLogout}=useAuth()
     return (
      <main>
-  <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-2 w-full px-4 py-2 bg-[#207dff] ">
+
+       {showLogOut&&  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
+        <h3 className="text-lg font-bold mb-4">Are you sure you want to logout?</h3>
+        <div className="flex justify-end gap-4">
+          <button
+            onClick={(()=>{
+              setShowLogout(false)
+            })}
+            className="px-4 py-2 bg-gray-300 text-black rounded"
+          >
+            No
+          </button>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-600 text-white rounded"
+          >
+            { loadingLogOut?"Loggin Out..":"Yes"}
+            
+          </button>
+        </div>
+      </div>
+    </div>}
+  <div className='relative'>
+    <div className="grid  fixe left-0 right-0 grid-cols-1 md:grid-cols-3 items-center gap-2 w-full px-4 py-2 bg-blue-700">
   {/* Left: Admin Portal */}
   <h3 className="text-white font-medium text-center md:text-left">Admin Portal</h3>
 
@@ -35,6 +62,7 @@ const {user}=useAuth()
     {user.username.slice(1).toLowerCase()} ⚡
   </p>
 </div>
+  </div>
 
 
        <div className="flex h-screen bg-gray-50">
@@ -51,22 +79,20 @@ const {user}=useAuth()
     </button>}
 
       {/* Sidebar */}
-      <aside
+                  <div className={`hidden md:block h-[100vh] ${isCollapsed ? 'w-20' : 'w-64'}`}></div>
+
+     <aside
   className={`
-    bg-[#207dff] border text-white fixed md:relative z-10 h-full
+    bg-blue-700
+      overflow-x-y-scroll text-white fixed  h-full left-0 top-0
     transition-all duration-300
     ${isCollapsed ? 'w-20' : 'w-64'}
-    ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+    ${mobileOpen ? 'translate-y-0 z-40 ' : '-translate-y-full z-40 md:translate-y-0'}
   `}
 >
   <div className="p-4 flex items-center justify-between border-b border-white/20 h-16">
     {!isCollapsed &&<Link href={`/admin`}> <h1 className="text-xl font-bold" onClick={() => setMobileOpen(!mobileOpen)} >Mediplus</h1></Link>}
-    <button
-      onClick={() => setIsCollapsed(!isCollapsed)}
-      className="p-2 rounded-full hover:bg-white/10 hidden md:block"
-    >
-      {isCollapsed ? '»' : '«'}
-    </button>
+   
   </div>
 
   <div className="p-4 h-[calc(100%-4rem)] flex flex-col">
@@ -94,12 +120,14 @@ const {user}=useAuth()
 
     {/* Logout Button - Added at the bottom */}
     <button
-      onClick={() => { /* Add your logout logic here */ }}
       className={`
         mt-auto flex items-center p-3 rounded-lg transition-colors
         bg-red-500 hover:bg-red-600 text-white
         ${isCollapsed ? 'justify-center' : ''}
       `}
+       onClick={(()=>{
+              setShowLogout(true)
+            })}
     >
       <svg 
         className={`w-5 h-5 ${isCollapsed ? '' : 'mr-3'}`} 
@@ -115,8 +143,22 @@ const {user}=useAuth()
 </aside>
 
       {/* Main Content */}
-      <main className="flex-1  overflow-auto my-15 md:transition-all duration-300 sm:my-0 xl:overflow-visible">
+      <main className="flex-1 z-40 overflow-auto md:transition-all duration-300 sm:my-0 xl:overflow-visible">
         <div className="p-6">
+          <div className="flex justify-between items-center gap-2 mb-8">
+       
+
+       {showBackToDashboard&& <div> <Link href="/admin">
+  <button className="px-3 py-2 bg-[#207dff] text-white rounded-md">
+    ← Back to Dashboard
+  </button>
+</Link></div>}
+      
+
+ 
+
+
+      </div>
           {children}
         </div>
       </main>

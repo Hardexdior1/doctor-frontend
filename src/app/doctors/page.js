@@ -74,7 +74,13 @@ const Doctors = () => {
   const doctorLists=doctors.slice(startIndex,lastIndex)
 
   const total=Math.min(lastIndex,doctors.length)
-
+const formatName=(name)=>{
+  let doctorName=name.trim().split(' ')[1]||[0]
+let formattedName = doctorName.toLowerCase().startsWith("dr")
+  ? doctorName.charAt(0).toUpperCase() + doctorName.slice(1)
+  : "Dr. " + doctorName.charAt(0).toUpperCase() + doctorName.slice(1);
+  return formattedName
+}
   return (
     <main className="container">
       <div className="pt-28 grid gap-5 md:grid-cols-5">
@@ -169,7 +175,7 @@ const Doctors = () => {
         </div>
 
         {/* Doctor Cards */}
-        <div className="transition grid gap-5 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 md:col-span-4">
+        <div className="transition grid gap-5 grid-cols-2 md:grid-cols-2 lg:grid-cols-4  md:col-span-4">
           {isLoading
             ? Array.from({ length: 4 }).map((_, index) => (
                 <div
@@ -200,12 +206,16 @@ const Doctors = () => {
                   />
                   <div className="flex flex-col gap-1 py-2 px-2">
                     <h3 className="text-xl font-bold">
-                      {doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}
+                      {/* {doc.name.charAt(0).toUpperCase() + doc.name.slice(1)} */}
+                      {formatName(doc.name)}
                     </h3>
-                    <h4 className="text-[#207dff]">{doc.specialty}</h4>
-                    <p className="text-gray-600">{doc.bio}</p>
+                    <h4 className="text-[#207dff]">  {
+         ` ${doc.specialty.charAt(0).toUpperCase() + doc.specialty.slice(1)}`} </h4>
+                    {/* <p className="text-gray-600">            {doc.bio.charAt(0).toUpperCase() + doc.bio.slice(1).substring(0,50) + '...' }
+  </p>
+          */}
                     <div className="mt-auto">
-                      <Link href={`/doctor-details/${doc._id}`}>
+                      <Link href={`/doctors/${doc._id}`}>
                         <button className="px-6 py-3 mt-1 bg-[#207dff] text-white rounded-full font-semibold hover:bg-blue-700 transition">
                           View Doctor
                         </button>
@@ -242,9 +252,9 @@ const Doctors = () => {
     onClick={() => {
       setCurrentPage(currentPage + 1);
     }}
-    disabled={lastIndex === doctors.length}
+    disabled={total === doctors.length}
     className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
-      lastIndex === doctors.length
+      total === doctors.length
         ? 'bg-white text-gray-400 border border-gray-300 cursor-not-allowed'
         : 'bg-white text-[#207dff] border border-[#207dff] hover:bg-[#207dff] hover:text-white'
     }`}

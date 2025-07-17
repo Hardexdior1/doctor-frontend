@@ -57,15 +57,15 @@ const Page = () => {
   const overviewStats = [
     {
       title: "Total Doctors",
-      count: doctors.length,
+      count: doctors.length?doctors.length:'loading..',
     },
     {
       title: "Total Appointments",
-      count: appointments.length,
+      count: appointments.length?appointments.length:'loading..',
     },
     {
       title: "Total Reviews",
-      count: reviews.length,
+      count: reviews.length?reviews.length:'loading..',
     },
   ];
 
@@ -193,7 +193,8 @@ const Page = () => {
       <td className="px-4 py-2">    {appointment.name.charAt(0).toUpperCase()}
       {appointment.name.slice(1).toLowerCase()} </td>
       <td className="px-4 py-2">{appointment.diagnosis}</td>
-      <td className="px-4 py-2">{doctor ? doctor.name : "Unknown"}</td>
+
+      <td className="px-4 py-2">  {doctor ? doctor.name.charAt(0).toUpperCase():"unknown"} { doctor?.name.slice(1).toLowerCase()} </td>
       <td className="px-4 py-2">{formattedDate}</td>
       <td className="px-4 py-2">
         {getStatusButton(appointment.date)}

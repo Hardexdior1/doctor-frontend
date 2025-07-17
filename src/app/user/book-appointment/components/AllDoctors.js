@@ -196,14 +196,16 @@ const AllDoctors = () => {
                     alt={doc.name}
                     width={1000}
                     height={600}
-                    className="rounded-t-lg object-cover"
+                    className="rounded-t-lg object-cover sm:h-72 md:h-50"
                   />
-                  <div className="flex flex-col gap-1 py-2 px-2">
+                  {/* <div className="flex flex-col gap-1 py-2 px-2">
                     <h3 className="text-xl font-bold">
-                      {doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}
+                      {doc.name.toUpperCase().startsWith('dr'.toUpperCase())?`${doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}`:`Dr. ${doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}` }
+                      
                     </h3>
-                    <h4 className="text-[#207dff]">{doc.specialty}</h4>
-                    <p className="text-gray-600">{doc.bio}</p>
+                    <h4 className="text-[#207dff]">                {doc.specialty.charAt(0).toUpperCase() + doc.specialty.slice(1)}
+</h4>
+                    <p className="text-gray-600"> {doc.bio.charAt(0).toUpperCase() + doc.bio.slice(1)} </p>
                     <div className="mt-auto">
                       <Link href={`/user/book-appointment/${doc._id}`}>
                         <button className="px-6 py-3 mt-1 bg-[#207dff] text-white rounded-full font-semibold hover:bg-blue-700 transition">
@@ -211,7 +213,34 @@ const AllDoctors = () => {
                         </button>
                       </Link>
                     </div>
+                  </div> */}
+                   <div className="flex flex-col gap-1 py-3 px-3">
+                 
+                    <h3 className="text-xl font-bold">
+                      {doc.name.toUpperCase().startsWith('dr'.toUpperCase())?`${doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}`:`Dr. ${doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}` }
+                      
+                    </h3>
+                    <h4 className="text-[#207dff]">                {doc.specialty.charAt(0).toUpperCase() + doc.specialty.slice(1)}
+</h4>
+                    <p className="text-gray-600">
+                       {/* {doc.bio.charAt(0).toUpperCase() + doc.bio.slice(1).length>50?.substring(0,50)+'...'} */}
+                      
+                      {doc.bio?.length > 50
+  ? doc.bio.charAt(0).toUpperCase() + doc.bio.slice(1, 30) + "..."
+  : doc.bio?.charAt(0).toUpperCase() + doc.bio?.slice(1) || "No bio available"}
+ </p>
+                  <div className="mt-3">
+                               <Link href={`${doc.isActive?`/user/book-appointment/${doc._id}`:`#`}`}>
+
+                     <button className={`w-full px-3 text-sm py-2  rounded-full font-semibold  transition md:px-6 md:text-base
+                        ${doc.isActive?`bg-[#207dff] hover:bg-blue-700  text-white`:`bg-red-100 text-red-700 cursor-not-allowed`}
+                        `}>
+                       {doc.isActive?' Book':'Currently Unavailable'}
+                      </button>
+                      </Link>
+                 
                   </div>
+                </div>
                 </div>
               ))}
         </div>
@@ -242,9 +271,9 @@ const AllDoctors = () => {
     onClick={() => {
       setCurrentPage(currentPage + 1);
     }}
-    disabled={lastIndex === doctors.length}
+    disabled={total === doctors.length}
     className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
-      lastIndex === doctors.length
+      total === doctors.length
         ? 'bg-white text-gray-400 border border-gray-300 cursor-not-allowed'
         : 'bg-white text-[#207dff] border border-[#207dff] hover:bg-[#207dff] hover:text-white'
     }`}

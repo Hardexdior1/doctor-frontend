@@ -1,7 +1,7 @@
 
 
 import Link from "next/link";
-   
+import PastAppointmentTables from './components/PastAppointmentsTable'
 const Page=()=>{
  
     const User_Routes = [
@@ -24,15 +24,7 @@ const Page=()=>{
           </svg>
         )
       },
-      {
-        path: "/user/payment-history",
-        label: "Payment History",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a4 4 0 00-8 0v2M5 11h14M12 17h.01M19 11a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2h14z" />
-          </svg>
-        )
-      },
+      
       {
         path: "/user/profile",
         label: "Profile",
@@ -42,26 +34,9 @@ const Page=()=>{
           </svg>
         )
       },
-      {
-        path: "/user/contact-us",
-        label: "Emergency",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 8a2 2 0 01-2 2h-3l-4 5v-5H6a2 2 0 01-2-2V6a2 2 0 012-2h13a2 2 0 012 2v2z" />
-          </svg>
-        )
-      },
-      {
-        path: "/user/faq",
-        label: "FAQs",
-        icon: (
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 14h.01M16 10h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" />
-          </svg>
-        )
-      }
-    ];
-  return  <div>
+     
+         ];
+  return  <div className="grid grid-cols gap-10">
   
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
   {User_Routes.map((route) => (
@@ -80,6 +55,7 @@ const Page=()=>{
   ))}
 </div>
 
+<PastAppointmentTables />
 
 
    </div>

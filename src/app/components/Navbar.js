@@ -13,7 +13,7 @@ const NavBar = () => {
   const [activeLink, setActiveLink] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
 const pathname=usePathname()
-
+console.log('pathname',pathname)
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
@@ -26,12 +26,12 @@ const pathname=usePathname()
   // Hotel-specific navigation items
   const navItems = [
     { name: "Home", href: "/", id: "home" },
-    { name: "About", href: "#whoweare", id: "whoweare" },
-    { name: "Department", href: "#deparment", id: "department" },
+    { name: "About", href: "/about", id: "about" },
+    // { name: "Department", href: "/#deparment", id: "department" },
     { name: "Doctors", href: "/doctors", id: "doctors" },
-    { name: "Blogs", href: "#about", id: "about" },
-    { name: "Contact", href: "#contact", id: "contact" },
-    { name: "appointment", href: "#appointment", id: "appointment" },
+    { name: "Blogs", href: "/blogs", id: "blogs" },
+    { name: "Contact", href: "/contact", id: "contact" },
+    { name: user?'my account':'login', href: "/auth", id: "auth" },
 
   ];
   const shouldShowBorder = 
@@ -42,17 +42,10 @@ const pathname=usePathname()
   
   <main>
     <div className="text-white  container bg-[#207dff] hidden md:block">
-    <div className="font-semibold flex items-center  z-20 justify-between">
-    <p className="text-white text-sm">+2349 13111 4346</p>
-      <p className="text-white text-sm hidden md:block">adeniranquwam001@gmail.com</p>
-      
-      {user?  <Link href={`/dasboard`}>Dashboard</Link> :<Link href={`/auth`}>login</Link>}
-    
+   
+{/* [#207dff] */}
     </div>
-
-
-    </div>
-      <header className={`absolute ${shouldShowBorder?'border-b':""}  top-0 right-0 left-0 z-10 bg-white md:top-6 bg-opacity-30 w-full transition-all py-5 duration-300 lg:container ${isScrolled ? "bg-white bg-opacity-30" : "bg-white bg-opacity-85"}`}>
+      <header className={` ${isScrolled?'border-b':''} ${shouldShowBorder?'border-b':""} fixed backdrop-blur top-0 right-0 left-0 z-40 bg-white  bg-opacity-30 w-full transition-all py-5 duration-300 bg-opacity-85 bg-white  lg:container `}>
       {/* Desktop Navigation */}
       <nav className="container px-4 flex justify-between items-center">
         {/* Logo */}
@@ -67,21 +60,38 @@ const pathname=usePathname()
           <ul className="flex space-x-8">
             {navItems.map((item) => (
               <li key={item.id}>
-                <Link
-          href={item.href}
-          className={`font-medium transition-colors ${
-            activeLink === item.id ? "text-[#207dff]" : "text-black hover:text-[#207dff]"
-          }`}
-          onClick={() => setActiveLink(item.id)}
-        >
-                  {item.name}
-                </Link>
+             
+                 <Link
+  href={item.href}
+  className={`font-bold transition-colors ${
+  pathname === item.href||pathname.startsWith(item.href+'/') ? "text-[#207dff] border-b-2 border-b-[#207dff]" : "text-black hover:text-[#207dff]"
+  }`}
+>
+  {item.name}
+
+  
+</Link>
+
+
               </li>
             ))}
           </ul>
 
          
         </div>
+
+      
+ <Link
+              href="#appointment"
+              className="hidden md:block"
+            >
+        <button               className="bg-[#207dff] text-white px-5 py-2 rounded-full font-semibold hover:bg-[#186fdd] transition"
+>
+         
+              Make Appointment
+           
+        </button>
+         </Link>
 
         {/* Mobile Menu Button */}
         <button 

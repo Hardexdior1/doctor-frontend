@@ -33,9 +33,10 @@ export const AuthProvider=({children})=>{
      
       fetchAllDoctors()
     },[])
-    let name='quwam'
-    const [username] = useState('Quwam');
-    const [password] = useState('quharm');
+    const [username,setUserName] = useState('');
+    const [password,setPassWord] = useState('');
+    //  const [username] = useState('admin');
+    // const [password] = useState('admin');
     const handleLogin = async (e) => {
       e.preventDefault();
       setLoadingLogin(true);
@@ -57,8 +58,37 @@ export const AuthProvider=({children})=>{
         setLoadingLogin(false);
       }
     };
+ const [loadingLogOut,setLoadingLogOut]=useState(false)
+      const [showLogOut,setShowLogout]=useState(false)
+
+  
+
+     const handleLogout=async()=>{
+
+    try { 
+      setLoadingLogOut(true)
+const response=await endpointroute.post('/logout ')
+toast.success(response.data.message||"Logout successful")
+setShowLogout(false)
+setLoadingLogOut(false)
+localStorage.removeItem('user')
+localStorage.removeItem('token')
+router.push('/auth')
+setUser(null)
+// setUser(null)
+
+      
+    } catch (error) {
+      console.log(error?.response?.data?.message||"oops. something went wrong, try again.")
+      console.log(error)
+      setLoadingLogOut(false)
+      setShowLogout(false)
+      toast.error(error?.response?.data?.message||"oops. something went wrong, try again.")
+
+    }
+   }
    
-    return <AuthContext.Provider value={{user,setUser,doctor,setDoctors,isLoading,name,handleLogin,lodingLogin,username,password}}>
+    return <AuthContext.Provider value={{user,setUser,doctor,setDoctors,isLoading,handleLogin,lodingLogin,username,password,handleLogout,loadingLogOut,showLogOut,setShowLogout, setUserName,setPassWord}}>
 {children}
     </AuthContext.Provider>
 }

@@ -78,7 +78,7 @@ const Footer = () => {
           name:"📞 +234 9131114346",
           route:"#"
         },{
-          name:"✉️ adeniranquwam001@mail.com",
+          name:"✉️adeniranefortlex@mail.com",
           route:"#"
         }
       ]
@@ -123,7 +123,7 @@ const Footer = () => {
           <div>
             <p className="text-sm text-white font-semibold">
               {" "}
-              &copy; {new Date().getFullYear()} Medicare all right reserved
+              &copy; {new Date().getFullYear()} Mediplus all right reserved
             </p>
           </div>
 

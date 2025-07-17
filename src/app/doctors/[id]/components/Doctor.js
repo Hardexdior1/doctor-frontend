@@ -6,9 +6,10 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Image from 'next/image'
 import endpointroute from '@/app/utils/endpointroute'
-const Doctor = ({doctor}) => {
+const Doctor =  ({doctor}) => {
   const { id } = useParams()
 
+console.log(doctor)
   const sortedReviews = doctor.review?.sort((a, b) => 
     new Date(a.createdAt) - new Date(b.createdAt)
   ) || []
@@ -145,9 +146,9 @@ setLoadingReview(true)
       <ToastContainer />
       
   
-<div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+<div className="bg-white border rounded-lg shadow-md overflow-hidden mb-8">
   <div className="flex flex-col md:flex-row">
-    <div className="w-full md:w-1/4 relative h-[400px] md:h-[300px]" >
+    <div className="w-full md:w-1/4 relative h-[400px] bg-black md:h-[300px]" >
       <Image 
         src={data.doctor.image || '/doctor-placeholder.jpg'}
         alt={data.doctor.name}
@@ -160,9 +161,23 @@ setLoadingReview(true)
     <div className="w-full md:w-2/3 p-6">
       <div className="flex flex-col h-fit">
         <div>
-          <h1 className="text-3xl font-bold text-[#207dff] mb-2">{data.doctor.name.charAt(0).toUpperCase()}{data.doctor.name.substring(1)} </h1>
-          <p className="text-xl text-black mb-4">{data.doctor.specialty}</p>
-          <p className="text-gray-700 mb-6">{data.doctor.bio}</p>
+          <h1 className="text-3xl font-bold text-[#207dff] mb-2">  {data.doctor.name.toUpperCase().startsWith("DR")
+        ? data.doctor.name.charAt(0).toUpperCase() + data.doctor.name.slice(1)
+        : `Dr. ${data.doctor.name.charAt(0).toUpperCase() + data.doctor.name.slice(1)}`}  </h1>
+          {/* <h1 >{data.doctor.name.charAt(0).toUpperCase()}{data.doctor.name.substring(1)} </h1> */}
+          <p className="text-xl text-black">{` ${data.doctor.specialty.charAt(0).toUpperCase() + data.doctor.specialty.slice(1)}`}</p>
+
+          {/* <p className="text-gray-700 mb-6">{data.doctor.bio}</p> */}
+          <div className='w-full max-w-2xl'>
+
+            <p className="text-gray-600 my-4 ">  {
+         ` ${data.doctor.bio.charAt(0).toUpperCase() + data.doctor.bio.slice(1) } `} 
+        </p>
+          
+          </div>
+        
+        {/* <h4 className="text-[#207dff]">{doc.specialty}</h4> */}
+        
         </div>
 
         <div className="mt-auto">
@@ -174,8 +189,27 @@ setLoadingReview(true)
               <span className="font-medium text-[#207dff]">Email: {data.doctor.email}</span>
             </div>
           </div>
+ {data.doctor.isActive&& <div className="flex flex-wrap gap-2 mb-4">
+  {data.doctor.availableDays[0]?.split(',').map((day, index) => (
+    <span 
+      key={index}
+      className="bg-[#207dff] text-white px-3 py-1 rounded-full text-sm"
+    >
+      {day}
+    </span>
+  ))}
+</div>}
 
-          <div className="flex flex-wrap gap-2">
+ <span
+      className={`px-2 py-1  rounded text-sm font-medium w-fit ${
+        data.doctor?.isActive
+          ? 'mt-4 bg-green-100 text-green-700'
+          : 'mt-4 bg-red-100 text-red-700'
+      }`}
+    >
+      {data.doctor.isActive ? 'Available for Booking' : 'Currently Unavailable'}
+    </span>
+          {/* <div className="flex flex-wrap gap-2">
             {data.doctor.availableDays?.map((day, index) => (
               <span 
                 key={index}
@@ -184,7 +218,7 @@ setLoadingReview(true)
                 {day}
               </span>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -477,7 +511,9 @@ setLoadingReview(true)
                   >
                     Book Appointment
                   </button> */}
-                  <button
+
+                  {doctor.isActive ? (
+        <button
   type="submit"
   disabled={loadingAPpointment}
   className={`w-full font-medium py-2 px-4 rounded-lg transition 
@@ -486,8 +522,17 @@ setLoadingReview(true)
       : 'bg-black hover:bg-gray-800 text-white'
     }`}
 >
-  {loadingAPpointment ? 'Booking...' : 'Book Appointment'}
+  {loadingAPpointment ? 'Booking...' : 'Book Appointment'} {doctor.isActive}
 </button>
+) : (
+  <button
+    className="mt-4 px-4 py-2 bg-gray-300 text-gray-600 rounded cursor-not-allowed"
+    disabled
+  >
+    Booking Unavailable
+  </button>
+)}
+            
 
                 </form>
               </div>

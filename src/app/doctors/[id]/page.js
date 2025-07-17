@@ -7,7 +7,7 @@ import endpointroute from "../../utils/endpointroute";
 
 
 export const generateMetadata = async ({params}) => {
-  const {id}= params
+  const {id}= await params
   const res=await endpointroute.get(`/doctor/${id}/records`)
   const doctor=res.data
   return {
@@ -26,9 +26,9 @@ async function getDoctor(id) {
 
 
 const Page = async({params})=>{
-
+const {id}= await params
     try {
-      const doctor = await getDoctor(params.id);
+      const doctor = await getDoctor(id);
   
       if (!doctor) {
         return notFound(); // if no doctor found

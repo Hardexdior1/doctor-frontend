@@ -1,59 +1,74 @@
 
-
 'use client'
 import withAuth from '../hoc/withAuth'
 import { usePathname } from 'next/navigation';
-import {User_Routes} from './config/userroutes'
 import { useState } from 'react';
+import {User_Routes} from './config/userroutes'
+
 import Link from 'next/link';
 import { useAuth } from '../context/AuthContext';
 
-const UserLayout= ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+const AdminLayout = ({ children }) => {
+  const [isCollapsed] = useState(false);
 const [mobileOpen, setMobileOpen] = useState(false);
 const pathname = usePathname();
+const showBackToDashboard=pathname!=='/user'
 
-const {user}=useAuth()
+const {user,handleLogout,loadingLogOut,showLogOut,setShowLogout}=useAuth()
     return (
-     <main className='min-h-screen'>
+     <main>
 
-  <div className="w-full px-4 py-3 bg-[#207dff]">
-  <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-4">
-    {/* Left: Patient Portal */}
-    <h3 className="text-white text-lg font-semibold text-center md:text-left">
-      Patient Portal
-    </h3>
+       {showLogOut&&  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
+        <h3 className="text-lg font-bold mb-4">Are you sure you want to logout?</h3>
+        <div className="flex justify-end gap-4">
+          <button
+            onClick={(()=>{
+              setShowLogout(false)
+            })}
+            className="px-4 py-2 bg-gray-300 text-black rounded"
+          >
+            No
+          </button>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-red-600 text-white rounded"
+          >
+            { loadingLogOut?"Loggin Out..":"Yes"}
+            
+          </button>
+        </div>
+      </div>
+    </div>}
+  <div className='relative'>
+    <div className="grid  fixe left-0 right-0 grid-cols-1 md:grid-cols-3 items-center gap-2 w-full px-4 py-2 bg-blue-700">
+  {/* Left: Admin Portal */}
+  <h3 className="text-white font-medium text-center md:text-left">Admin Portal</h3>
 
-    {/* Center: Welcome Message */}
-    <p className="text-white text-center text-base md:text-lg font-medium">
-      Medicare welcomes you,&nbsp;
-      <span className="font-semibold capitalize">
-        {user.username}
-      </span>
-    </p>
+  {/* Center: Welcome Message */}
+  <p className="text-center text-white font-medium">
+    Mediplus welcomes you,{" "}
+    <span className="font-semibold">
+      {user.username.charAt(0).toUpperCase()}
+      {user.username.slice(1).toLowerCase()}
+    </span>
+  </p>
 
-    {/* Right: Username with Icon */}
-    <Link href={'/user/profile'}>
-    <div className="hidden md:flex items-center justify-end gap-2 text-white font-semibold">
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3 1.343 3 3 3zm0 2c-2.667 0-8 1.333-8 4v3h16v-3c0-2.667-5.333-4-8-4z" />
-      </svg>
-    </div></Link>
-  </div>
+  {/* Right: Username + Cool Phrase */}
+  <p className="text-right hidden md:block text-white font-semibold">
+    {user.username.charAt(0).toUpperCase()}
+    {user.username.slice(1).toLowerCase()} ⚡
+  </p>
 </div>
-
-{mobileOpen&& <div
-    className="fixed inset-0 bg-black bg-opacity-50 z-30"
-  />}
+  </div>
 
 
-       <div className="flex  bg-gray-50">
+       <div className="flex h-screen bg-gray-50">
       {/* Mobile Sidebar Toggle */}
       
-     <div>
      {mobileOpen?  <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="md:hidden fixed z-20 top-4 right-4 p-2 z-40 rounded-lg bg-[#207dff] text-white"
+        className="md:hidden fixed z-20 top-4 right-4 p-2 rounded-lg bg-[#207dff] text-white"
       >✖</button>: <button
       onClick={() => setMobileOpen(!mobileOpen)}
       className="md:hidden fixed z-20 top-4 right-4 p-2 rounded-lg bg-[#207dff] text-white"
@@ -62,22 +77,20 @@ const {user}=useAuth()
     </button>}
 
       {/* Sidebar */}
+                  <div className={`hidden md:block h-[100vh] ${isCollapsed ? 'w-20' : 'w-64'}`}></div>
+
      <aside
   className={`
-    bg-[#207dff] border text-white fixed top-0 md:relative h-screen
-    transition-all duration-300
+    bg-blue-700
+      overflow-x-y-scroll text-white fixed  h-[100vh] left-0 top-0
+    transition-all duration-300 z-40
     ${isCollapsed ? 'w-20' : 'w-64'}
-    ${mobileOpen ? 'translate-x-0 z-40' : '-translate-x-full md:translate-x-0'}
+    ${mobileOpen ? 'translate-y-0 z-40 ' : '-translate-y-full z-40 md:translate-y-0'}
   `}
 >
   <div className="p-4 flex items-center justify-between border-b border-white/20 h-16">
-    {!isCollapsed &&<Link href={`/user`}> <h1 className="text-xl font-bold" onClick={() => setMobileOpen(!mobileOpen)} >Mediplus</h1></Link>}
-    <button
-      onClick={() => setIsCollapsed(!isCollapsed)}
-      className="p-2 rounded-full hover:bg-white/10 hidden md:block"
-    >
-      {isCollapsed ? '»' : '«'}
-    </button>
+    {!isCollapsed &&<Link href={`/admin`}> <h1 className="text-xl font-bold" onClick={() => setMobileOpen(!mobileOpen)} >Mediplus</h1></Link>}
+   
   </div>
 
   <div className="p-4 h-[calc(100%-4rem)] flex flex-col">
@@ -105,12 +118,14 @@ const {user}=useAuth()
 
     {/* Logout Button - Added at the bottom */}
     <button
-      onClick={() => { /* Add your logout logic here */ }}
       className={`
         mt-auto flex items-center p-3 rounded-lg transition-colors
         bg-red-500 hover:bg-red-600 text-white
         ${isCollapsed ? 'justify-center' : ''}
       `}
+       onClick={(()=>{
+              setShowLogout(true)
+            })}
     >
       <svg 
         className={`w-5 h-5 ${isCollapsed ? '' : 'mr-3'}`} 
@@ -124,11 +139,27 @@ const {user}=useAuth()
     </button>
   </div>
 </aside>
-     </div>
 
       {/* Main Content */}
-    <main className="w-full overflow-auto   my-15 md:transition-all duration-300 sm:my-0 xl:overflow-visible">
+      <main className="flex-1  overflow-auto  md:transition-all duration-300 sm:my-0 xl:overflow-visible">
         <div className="p-6">
+          <div className="flex justify-between items-center gap-2 mb-8">
+       
+       {/* <div> <Link href="/user">
+  <button className="px-3 py-2 bg-[#207dff] text-white rounded-md">
+    ← Back to Dashboard
+  </button>
+</Link></div> */}
+
+ {showBackToDashboard&& <div> <Link href="/user">
+  <button className="px-3 py-2 bg-[#207dff] text-white rounded-md">
+    ← Back to Dashboard
+  </button>
+</Link></div>}
+ 
+
+
+      </div>
           {children}
         </div>
       </main>
@@ -137,7 +168,11 @@ const {user}=useAuth()
     );
   };
   
-export default withAuth(UserLayout,['user'])
+export default withAuth(AdminLayout,['user'])
+
+
+
+
 
 
 

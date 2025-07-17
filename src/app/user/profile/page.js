@@ -23,7 +23,7 @@ export default function UserProfile() {
   const handleSave = async(e) => {
     e.preventDefault();
     // if(formData.username.trim()!==""&&formData.email.trim()!==""&&formData.password!=="")
-    if(formData.username.trim()!==""&&formData.password!=="")
+    if(formData.username.trim()!=="")
         {
         try {
             const res=await endpointroute.patch('/edit-profile',formData,
@@ -31,9 +31,7 @@ export default function UserProfile() {
                     withCredentials: true,
                 }
             )
-            console.log(res.data)
-            await endpointroute.post('/logout', {}, { withCredentials: true });
-            router.push('/auth')
+            
         } catch (error) {
             console.log(error)
         }
@@ -54,7 +52,18 @@ export default function UserProfile() {
 
   return (
     <div className="max-w-xl mx-auto p-6">
-      <div className="flex justify-between items-center mb-6">
+      <div className="text-center py-16 text-gray-600">
+  <p className="text-2xl font-semibold mb-2">Restricted Access 🔐</p>
+  <p className="text-base">
+    This profile page is private and only accessible to the account owner.
+  </p>
+  <p className="text-sm mt-2 text-gray-500">
+    If you believe you should have access, please contact the system administrator.
+     <b className="mt-4 block">adeniranquwam001@gmail.com</b>
+  </p>
+</div>
+
+      <div className="flex hidden justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-gray-800">
           {isEditing ? "Edit Profile" : "Profile Information"}
         </h2>
@@ -66,7 +75,7 @@ export default function UserProfile() {
         </button>
       </div>
 
-      <form onSubmit={handleSave} className="space-y-5 bg-white p-6 rounded-xl shadow-md border border-blue-100">
+      <form onSubmit={handleSave} className="hidden space-y-5 bg-white p-6 rounded-xl shadow-md border border-blue-100">
         <div>
           <label className="block mb-1 text-sm font-medium text-gray-700">Username</label>
           <input

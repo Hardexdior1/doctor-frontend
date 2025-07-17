@@ -12,10 +12,7 @@ const faqItems = [
     question: 'Where can I see my visit history?',
     answer: 'Click on the Dashboard and select "Visit History" to see all your past appointments with details.',
   },
-  {
-    question: 'How can I print my payment receipts?',
-    answer: 'Navigate to "Payment History", then click the print icon or button beside the payment you want a receipt for.',
-  },
+
   {
     question: 'Can I change my password?',
     answer: 'Yes. Go to "Change Password" from your profile settings, enter your current password and new password, then save.',

@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import endpointroute from '../../utils/endpointroute'
 import Modal from "./EditDoctorModal/Modal";
+import { ToastContainer,toast } from "react-toastify";
 export default function DoctorsList() {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,9 +28,7 @@ export default function DoctorsList() {
     fetchDoctors();
   }, []);
 
-  const filteredDoctors = doctors.filter((doctor) =>
-    doctor.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
-  );
+ 
   // doctor modal
   const handleToggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -49,15 +48,71 @@ export default function DoctorsList() {
   const startIndex=(currentPage-1)*itemsPerPage
 
   const lastIndex=startIndex+itemsPerPage
+ const filteredDoctors = doctors.filter((doctor) =>
+    doctor.name.toLowerCase().includes(searchTerm.trim().toLowerCase())
+  );
 
   const doctorList=filteredDoctors.slice(startIndex,lastIndex)
 
   const total=Math.min(lastIndex,doctors.length)
+const [deleteDoc,setDeleteDoc]=useState(false)
+
+const     handleToggleDelete=()=>{
+  setDeleteDoc(!deleteDoc)
+}
+
+const [deleting,setDeleting]=useState(false)
+ const deleteDoctor = async () => {
+    try {
+      setDeleting(true)
+    let res=    await endpointroute.delete(`/delete-doctor/${doctorEdit?._id}`)
+   let newDoctors= doctors.filter((item)=>item._id!==doctorEdit._id)
+   setDoctors(newDoctors)
+    setDeleting(false)
+console.log(res)
+toast.success('doctor deleted successfully')
+setDeleteDoc(false)
+    } catch (error) {
+      console.log(error)
+      setDeleting(false)
+    }
+  }
+ 
+
+
 
   return (
-    <div >
+    <div>
       {/* modal */}
-{isModalOpen &&       <Modal handleToggleModal={handleToggleModal} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} doctor={doctorEdit}/>
+      <ToastContainer />
+
+        {deleteDoc&& <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-6 rounded-lg w-[90%] max-w-md shadow-lg">
+        <h3 className="text-lg font-bold mb-4">Are you sure you want to delete? {doctorEdit?.name?.charAt(0).toUpperCase() }{doctorEdit?.name?.slice(1).toLowerCase()}
+</h3>
+        <div className="flex justify-end gap-4">
+          <button
+            onClick={(()=>{
+              handleToggleDelete()
+            })}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            No
+          </button>
+          <button
+            // onClick={handleLogout}
+            disabled={deleting}
+            onClick={deleteDoctor}
+            className="px-4 py-2 bg-red-600 text-white rounded"
+          >
+            { deleting?"Deleting...":"Yes"}
+          
+            
+          </button>
+        </div>
+      </div>
+    </div>}
+{isModalOpen &&       <Modal  handleToggleModal={handleToggleModal} doctors={doctors} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} setDoctors={setDoctors} doctor={doctorEdit}/>
 }
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
         <h3 className="text-xl font-semibold text-[#207dff]">Doctors</h3>
@@ -137,6 +192,16 @@ export default function DoctorsList() {
   }} className="text-black text-sm font-medium hover:underline"   >
     Edit
   </button>
+{' / '} 
+
+  <button onClick={()=>{
+   handleEditDoctor(doctor)
+  //  setDeleteDoc(t)
+                handleToggleDelete()
+
+  }} className="text-red-500 text-sm font-medium hover:underline"   >
+    Delete
+  </button>
 </td>
 
     </tr>
@@ -174,9 +239,9 @@ export default function DoctorsList() {
     onClick={() => {
       setCurrentPage(currentPage + 1);
     }}
-    disabled={lastIndex === doctors.length}
+    disabled={total === doctors.length}
     className={`px-4 py-2 rounded-md font-medium transition-colors duration-200 ${
-      lastIndex === doctors.length
+      total === doctors.length
         ? 'bg-white text-gray-400 border border-gray-300 cursor-not-allowed'
         : 'bg-white text-[#207dff] border border-[#207dff] hover:bg-[#207dff] hover:text-white'
     }`}

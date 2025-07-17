@@ -37,6 +37,8 @@ export default function ConsultationForm() {
       const res = await endpointroute.post("/contact", formData);
       toast.success(res.data.message);
       setLoading(false);
+        phoneRef.current.value = "";
+  messageRef.current.value = "";
     } catch (error) {
       console.log(error?.response?.data?.error);
       toast.error(error?.response?.data?.error);
@@ -52,6 +54,7 @@ export default function ConsultationForm() {
       {/* 📞 Contact Info Card */}
       <div className="bg-[#207dff] text-white rounded-xl p-6 mb-8 shadow-lg">
   <h3 className="text-xl md:text-2xl font-bold mb-4 text-white">Contact Information</h3>
+
   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base md:text-lg">
     <div className="flex items-center space-x-3">
       <FaEnvelope className="text-white text-xl" />
@@ -106,8 +109,9 @@ export default function ConsultationForm() {
 
 
 <div className="bg-white p-8 rounded-lg shadow-md">
-  <h4 className="font-bold mb-6 text-center text-[#207dff]">Emergency Assistance Form</h4>
-
+ <div className='mb-4 text-center'> <h4 className="font-bold mb-6 text-center text-[#207dff]">Emergency Assistance Form</h4>
+<p>Please describe your current location and the nature of the emergency so we can respond as quickly as possible.</p>
+</div>
   <form className="grid grid-cols-1 gap-6" onSubmit={handleSubmit}>
     <div>
       <label htmlFor="phone" className="block text-gray-700 mb-2">Phone</label>
@@ -143,10 +147,27 @@ export default function ConsultationForm() {
         }`}
       >
         {loading && (
-          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5..."></path>
-          </svg>
+         <svg
+  className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 24 24"
+>
+  <circle
+    className="opacity-25"
+    cx="12"
+    cy="12"
+    r="10"
+    stroke="currentColor"
+    strokeWidth="4"
+  />
+  <path
+    className="opacity-75"
+    fill="currentColor"
+    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+  />
+</svg>
+
         )}
         {loading ? 'Sending Request...' : 'Submit Emergency Request'}
       </button>

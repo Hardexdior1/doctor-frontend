@@ -7,9 +7,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import endpointroute from '../../../utils/endpointroute'
 import Image from 'next/image'
 import { useAuth } from '@/app/context/AuthContext'
-
 const DoctorPage = () => {
-  const { id } = useParams()
+  const { id } =  useParams()
   const [data, setData] = useState({
     reviews: [],
     doctor: [],
@@ -115,16 +114,10 @@ const DoctorPage = () => {
   }
 
   return (
-    <div className="py-26 md:py-2">
+    <main className="py-26 md:py-2">
       <ToastContainer />
 
-      <div className="flex items-center gap-2 mb-8">
-        <h3 className="text-black font-medium">Hi,</h3>
-        <p className="text-[#207dff] font-semibold">
-          {user.username.charAt(0).toUpperCase()}
-          {user.username.slice(1).toLowerCase()}
-        </p>
-      </div>
+      
       
 <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
  {data?.doctor?.map((item)=>{
@@ -141,8 +134,8 @@ const DoctorPage = () => {
 
 
 {/* <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8"> */}
-  return <div className="flex flex-col md:flex-row" key={0+1}>
-    <div className="w-full md:w-1/4 relative h-[400px] md:h-[300px]" >
+  return <div className="flex flex-col  lg:flex-row" key={0+1}>
+    <div className="w-full lg:w-1/4 relative h-[450px] " >
       <Image 
         src={item.image || '/doctor-placeholder.jpg'}
         alt={item.name}
@@ -170,16 +163,18 @@ const DoctorPage = () => {
             </div>
           </div>
 
+         
           <div className="flex flex-wrap gap-2">
-            {item.availableDays?.map((day, index) => (
-              <span 
-                key={index}
-                className="bg-[#207dff] text-white px-3 py-1 rounded-full text-sm"
-              >
-                {day}
-              </span>
-            ))}
-          </div>
+  {item.availableDays[0]?.split(',').map((day, index) => (
+    <span 
+      key={index}
+      className="bg-[#207dff] text-white px-3 py-1 rounded-full text-sm"
+    >
+      {day}
+    </span>
+  ))}
+</div>
+
         </div>
       </div>
     </div>
@@ -403,7 +398,7 @@ const DoctorPage = () => {
 </div>
 
       </div>
-    </div>
+    </main>
   )
 }
 

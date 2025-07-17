@@ -1,34 +1,44 @@
 'use client'
-import { useState } from "react";
-import { ToastContainer, } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../context/AuthContext";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+
+import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAuth } from '../context/AuthContext';
+import { Eye, EyeOff, HeartPulse, Stethoscope, Syringe } from 'lucide-react';
 
 export default function LoginPage() {
+
   return (
-    <div className="min-h-screen border-t bg-gray-50 flex items-center justify-center container py-10 mt-10">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-[#207dff] mb-2">Mediplus</h1>
-          <p className="text-gray-600">Login to access medical dashboard</p>
-          <div className="mt-4 p-3 bg-blue-50 rounded-lg text-sm text-gray-700">
-            <p>Demo credentials:</p>
-            <p className="font-medium">Username: <span className="text-[#207dff]">admin</span></p>
-            <p className="font-medium">Password: <span className="text-[#207dff]">admin</span></p>
-          </div>
-        </div>
-        
-        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-          <div className="bg-[#207dff] py-4 px-6">
-            <h2 className="text-xl font-semibold text-white">Login to Dashboard</h2>
-          </div>
-          
-          <div className="p-6 sm:p-8">
-            <LoginForm />
-          </div>
-        </div>
-        
+    <div className=" min-h-screen flex items-center justify-center  bg-gray-100 px-4 py-10 overflow-hidden md:mt-20">
+      {/* Decorative Icons */}
+      <Stethoscope className="absolute top-6 left-6 text-[#207dff] opacity-20 w-10 h-10 sm:w-14 sm:h-14" />
+      <HeartPulse className="absolute bottom-10 right-6 text-red-500 opacity-20 w-10 h-10 sm:w-14 sm:h-14" />
+      <Syringe className="absolute top-1/3 right-10 text-green-500 opacity-20 w-10 h-10 sm:w-14 sm:h-14" />
+
+      <div className="relative z-10 w-full max-w-md bg-white p-8 rounded-xl shadow-2xl">
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">Welcome to Mediplus</h2>
+        <p className="text-sm text-center text-gray-500 mb-4">Login to  with any of the provided accounts </p>
+
+        {/* Demo Credentials */}
+        {/* Demo Credentials Combined */}
+<div className="mb-6 bg-blue-50 border border-blue-200 text-blue-700 p-4 rounded-md text-sm space-y-3">
+  <p className="font-semibold text-base">Demo Credentials</p>
+
+  <div>
+    <p className="font-medium">🔐 Admin</p>
+    <p>Username: <span className="font-semibold">admin</span></p>
+    <p>Password: <span className="font-semibold">admin</span></p>
+  </div>
+
+  <div className="pt-2 border-t border-blue-100">
+    <p className="font-medium">👤 User</p>
+    <p>Username: <span className="font-semibold">Quwam10</span></p>
+    <p>Password: <span className="font-semibold">password</span></p>
+  </div>
+</div>
+
+
+        <LoginForm />
         <ToastContainer position="top-center" />
       </div>
     </div>
@@ -36,68 +46,63 @@ export default function LoginPage() {
 }
 
 function LoginForm() {
- 
   const [showPassword, setShowPassword] = useState(false);
-  const { handleLogin,lodingLogin,username,password } = useAuth();
-
- 
+  const { handleLogin, lodingLogin, username, password , setUserName, setPassWord } = useAuth();
 
   return (
-    <form onSubmit={handleLogin} className="space-y-6">
+    <form onSubmit={handleLogin} className="space-y-5">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Username
-        </label>
+        <label className="text-sm text-gray-600 mb-1 block">Username</label>
         <input
           type="text"
           value={username}
-          readOnly
-          // onChange={(e) => setUsername(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#207dff] focus:border-[#207dff] outline-none transition"
-          placeholder="Enter your username"
-          required
+          onChange={((e)=>{
+            setUserName(e.target.value)
+          })}
+          // readOnly
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#207dff] focus:border-[#207dff]"
         />
       </div>
-      
+
       <div className="relative">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Password
-        </label>
+        <label className="text-sm text-gray-600 mb-1 block">Password</label>
         <input
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           value={password}
-          readOnly
-          // onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#207dff] focus:border-[#207dff] outline-none transition pr-10"
-          placeholder="Enter your password"
-          required
+           onChange={((e)=>{
+            setPassWord(e.target.value)
+          })}
+          // readOnly
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 pr-10 focus:outline-none focus:ring-2 focus:ring-[#207dff] focus:border-[#207dff]"
         />
         <button
           type="button"
           className="absolute right-3 top-9 text-gray-500 hover:text-gray-700"
           onClick={() => setShowPassword(!showPassword)}
         >
-          {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
         </button>
       </div>
-      
+
       <button
         type="submit"
         disabled={lodingLogin}
-        className={`w-full py-3 px-4 rounded-lg font-medium text-white bg-[#207dff] hover:bg-[#1a6bd9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#207dff] transition ${lodingLogin ? 'opacity-70 cursor-not-allowed' : ''}`}
+        className={`w-full bg-[#207dff] text-white py-3 rounded-lg font-medium hover:bg-[#1a6bd9] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#207dff] ${
+          lodingLogin ? 'opacity-70 cursor-not-allowed' : ''
+        }`}
       >
         {lodingLogin ? (
           <span className="flex items-center justify-center">
             <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
             Logging in...
           </span>
-        ) : 'Login'}
+        ) : (
+          'Login'
+        )}
       </button>
-      
-    
     </form>
   );
 }

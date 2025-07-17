@@ -101,7 +101,7 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
       };
 
       checkAuth();
-    }, [user, setUser, router]); 
+    }, [ router]); 
 
     if (loading) {
       return (

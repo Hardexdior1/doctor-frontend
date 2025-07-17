@@ -50,21 +50,26 @@ const PastDoctors = ({ pastDoctors,setActiveTab }) => {
                   src={doc.image}
                   alt={doc.name}
                   width={1000}
-                  height={600}
-                  className="rounded-t-lg object-cover w-full"
+                  height={1000}
+                  className="rounded-t-lg object-cover w-full  sm:h-50 md:h-50"
                 />
                 <div className="flex flex-col gap-1 py-3 px-3">
-                  <h3 className="text-lg font-bold md:text-xl">
-                    {doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}
-                  </h3>
-                  <h4 className="text-[#207dff] font-medium">{doc.specialty}</h4>
-                  <p className="text-gray-600 text-sm line-clamp-3">{doc.bio}</p>
+                 
+                    <h3 className="text-xl font-bold">
+                      {doc.name.toUpperCase().startsWith('dr'.toUpperCase())?`${doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}`:`Dr. ${doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}` }
+                      
+                    </h3>
+                    <h4 className="text-[#207dff]">                {doc.specialty.charAt(0).toUpperCase() + doc.specialty.slice(1)}
+</h4>
+                    <p className="text-gray-600"> {doc.bio.charAt(0).toUpperCase() + doc.bio.slice(1).substring(0,30)+'...'} </p>
                   <div className="mt-3">
-                                          <Link href={`/user/book-appointment/${doc._id}`}>
-                      <button className="px-3 text-sm py-2 bg-[#207dff] text-white rounded-full font-semibold hover:bg-blue-700 transition md:px-6 md:text-base">
-                        Book again
+         
+                     <button className={`px-3 text-sm py-2  rounded-full font-semibold  transition md:px-6 md:text-base
+                        ${doc.isActive?`bg-[#207dff] hover:bg-blue-700  text-white`:`bg-red-100 text-red-700 cursor-not-allowed`}
+                        `}>
+                       {doc.isActive?' Book again':'Currently Unavailable'}
                       </button>
-                    </Link>
+                 
                   </div>
                 </div>
               </div>
