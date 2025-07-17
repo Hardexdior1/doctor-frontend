@@ -235,16 +235,17 @@ setLoadingReview(true)
     </h2>
 
     {currentReviews.length > 0 ? (
-      <div className="space-y-6 max-h-[400px] overflow-y-auto w-full">
+      <div className="py-6 max-h-[400px] overflow-y-auto w-full">
         {currentReviews.map((review) => {
           return (
             <div key={review._id} className="border-b border-gray-100 pb-6 last:border-0">
               <div className="flex items-center gap-4 mb-3">
                 <div className="bg-[#207dff] text-white rounded-full h-12 w-12 flex items-center justify-center text-lg font-bold">
-                  {(review.name?.charAt(0) || 'A').toUpperCase()}
+                  {(review?.name.charAt(0) || 'A').toUpperCase()}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">{review.name}</h3>
+                  <h3 className="font-semibold text-lg"> {review?.name.charAt(0).toUpperCase() + review.name.slice(1)}            
+ </h3>
                   <p className="text-sm text-gray-500">
                     {new Date(review.createdAt).toLocaleDateString('en-US', {
                       year: 'numeric',
@@ -256,7 +257,7 @@ setLoadingReview(true)
                   </p>
                 </div>
               </div>
-              <p className="text-gray-700 pl-16">{review.message}</p>
+              <p className="text-gray-700 pl-16">  {review?.message.charAt(0).toUpperCase() + review.message.slice(1)} </p>
             </div>
           );
         })}
