@@ -15,7 +15,7 @@ const RecentAppointmentsCards = () => {
         const res = await endpointroute.get('/user-past-appointment');
         setAppointments(res.data.slice(0, 3)); // Show only latest 3
       } catch (error) {
-        console.error('Failed to fetch appointments:', error);
+        console.log('Failed to fetch appointments:', error);
       } finally {
         setIsLoading(false);
       }

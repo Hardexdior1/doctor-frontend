@@ -94,6 +94,7 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
 
         } catch (error) {
           toast.error(error?.response?.data?.message || "Authentication failed");
+          console.log('error',error)
           router.push("/auth");
         } finally {
           setLoading(false);

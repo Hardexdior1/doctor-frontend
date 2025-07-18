@@ -210,9 +210,12 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
                   <Image
                     src={doc.image}
                     alt={doc.name}
+                    // width={1000}
+                    // height={600}
                     width={1000}
-                    height={600}
-                    className="rounded-t-lg object-cover"
+  height={600}
+  className="w-full  sm:h-72 md:h-50 object-cover rounded-tl-lg rounded-tr-lg "
+                    // className="rounded-t-lg object-cover"
                   />
                   <div className="flex flex-col gap-1 py-2 px-2">
                     <h3 className="text-xl font-bold">

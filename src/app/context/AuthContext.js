@@ -48,8 +48,9 @@ export const AuthProvider=({children})=>{
         },{ withCredentials: true });
         
         const loggedinUser = response.data.user;
+        console.log('user',response.data.user)
         setUser(loggedinUser);
-        router.push(loggedinUser.role=="admin"?'/admin':'/user');
+        // router.push(loggedinUser.role=="admin"?'/admin':'/user');
         toast.success("Login successful! Redirecting...");
       } catch (error) {
         console.log("Login failed:", error);
