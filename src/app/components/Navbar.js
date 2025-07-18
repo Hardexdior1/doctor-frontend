@@ -10,7 +10,6 @@ const NavBar = () => {
   const {user}=useAuth()
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState("home");
   const [isScrolled, setIsScrolled] = useState(false);
 const pathname=usePathname()
 console.log('pathname',pathname)
@@ -41,17 +40,12 @@ console.log('pathname',pathname)
   return (
   
   <main>
-    <div className="text-white  container bg-[#207dff] hidden md:block">
-   
-{/* [#207dff] */}
-    </div>
-      <header className={` ${pathname.includes('doctors')?`border-b`:``} ${isScrolled?'border-b':''} ${shouldShowBorder?'border-b':""} fixed backdrop-blur top-0 right-0 left-0 z-40 bg-white  bg-opacity-30 w-full transition-all py-5 duration-300 bg-opacity-85 bg-white  lg:container `}>
+    
+      <header className={`${pathname=='/auth'?``:`z-40`} ${pathname.includes('doctors')?`border-b`:``} ${isScrolled?'border-b':''} ${shouldShowBorder?'border-b':""} fixed backdrop-blur top-0 right-0 left-0  bg-white  bg-opacity-30 w-full transition-all py-5 duration-300 bg-opacity-85 bg-white  lg:container `}>
       {/* Desktop Navigation */}
       <nav className="container px-4 flex justify-between items-center">
         {/* Logo */}
-        <Link href="/" className="flex items-center" onClick={(()=>{
-          setActiveLink("home")
-        })}>
+        <Link href="/" className="flex items-center">
          <h3 className="font-bold">Mediplus</h3>
         </Link>
      
@@ -111,8 +105,8 @@ console.log('pathname',pathname)
       </nav>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden fixed inset-0 bg-white z-40 transform transition-all duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
-        <div className="container mx-auto px-4 py-6">
+      <div className={`md:hidden fixed h-screen  bg-white inset-0  z-40 transform transition-all duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
+        <div className="container mx-auto px-4   py-6">
           <div className="flex justify-between items-center mb-8">
             <Link href="/" onClick={() => setIsMenuOpen(false)}>
             <h3 className="font-bold">Mediplus</h3>
@@ -130,9 +124,9 @@ console.log('pathname',pathname)
               <li key={item.id}>
                 <Link
                   href={item.href}
-                  className={`block py-2 text-lg ${activeLink === item.id ? "text-[#207dff] font-medium" : "text-gray-700"}`}
+                  className={`block py-2 text-lg ${item.name=='login'?'hidden':''}  ${  pathname === item.href||pathname.startsWith(item.href+'/') ? "text-[#207dff] border-b-2 border-b-[#207dff]" : "text-gray-700"
+}`}
                   onClick={() => {
-                    setActiveLink(item.id);
                     setIsMenuOpen(false);
                   }}
                 >
@@ -142,26 +136,35 @@ console.log('pathname',pathname)
             ))}
           </ul>
 
-          <div className="mt-10 space-y-4 flex flex-col gap-4">
+          <div className="mt-10  space-y-4 flex flex-col gap-4">
             <Link href="/auth">
               <button 
                 className="w-full py-3 border border-[#207dff] text-[#207dff] rounded-lg font-medium transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Sign In
+                Sign In n
               </button>
             </Link>
-            <Link href="/auth/register">
-              <button 
-                className="w-full py-3 bg-[#207dff] text-white rounded-lg font-medium transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Sign Up
-              </button>
-            </Link>
+
+
+             <Link
+              href="#appointment"
+              // className=" md:hidden"
+            >
+        <button               className="bg-[#207dff] rounded-lg w-full text-white  py-3 font-semibold hover:bg-[#186fdd] transition"
+>
+         
+              Make Appointment
+           
+        </button>
+         </Link>
+           
           </div>
         </div>
       </div>
+
+
+
     </header>
   </main>
   );

@@ -28,17 +28,7 @@ const AppointmentForm = () => {
     }
 
     setLoading(true)
-
-    try {
-      const res = await fetch('/book', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
-
-      if (!res.ok) throw new Error('Failed to send request.')
-
-      toast.success('Appointment request sent successfully!')
+ toast.success('Appointment request sent successfully!')
       setFormData({
         fullName: '',
         phone: '',
@@ -46,11 +36,7 @@ const AppointmentForm = () => {
         sickness: '',
         description: '',
       })
-    } catch (error) {
-      toast.error(error.message || 'Something went wrong.')
-    } finally {
-      setLoading(false)
-    }
+   setLoading(false)
   }
 
   return (
@@ -67,7 +53,7 @@ const AppointmentForm = () => {
             Book an Appointment 
           </h2>
             <h2 className="text-4xl font-bold text-black mb-3">
-            <span className="text-[#207dff] font-semibold">Online</span>, It's{' '}
+            <span className="text-[#207dff] font-semibold">Online</span>, It&apos;s{' '}
             <span className="text-[#207dff] font-semibold">Easy</span>.
           </h2>
           

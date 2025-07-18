@@ -39,7 +39,15 @@ export default function LoginPage() {
 
 
         <LoginForm />
-        <ToastContainer position="top-center" />
+       <ToastContainer
+  position="top-right"
+  marginTop="50px"
+  toastContainerStyle={{
+    marginTop: '80px', // adjust based on your navbar height
+    zIndex: 9999 // ensures it's above the navbar
+  }}
+/>
+
       </div>
     </div>
   );

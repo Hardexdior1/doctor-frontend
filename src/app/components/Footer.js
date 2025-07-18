@@ -1,6 +1,4 @@
 import React from "react";
-// import logo from "../../../public/logo-white.png";
-// import logo from "../../../public/xpedia.png";
 import Link from "next/link";
 
 const Footer = () => {
@@ -36,13 +34,10 @@ const Footer = () => {
       links:[
         {
           name:"Who we are",
-          route:"#whoweare"
+          route:"#about"
 
         },
-        {
-          name:"Feature",
-          route:"#"
-        },
+        
         {
           name:"News settler",
           route:"#"
@@ -61,11 +56,11 @@ const Footer = () => {
         },
         {
           name:"Contact us",
-          route:"#contact"
+          route:"/contact"
         },
        
         {
-          name:"Sign up",
+          name:"Sign in",
           route:"/auth"
         },
        
@@ -94,7 +89,7 @@ const Footer = () => {
       
 
       <div className="bg-[#207dff] pt-10">
-        <footer className="container grid gap-6 md:grid-cols-5">
+        <footer className="container grid gap-6 lg:grid-cols-5">
           <div className="md:col-span-1">
           <h2 className="font-bold mb-2">Mediplus</h2>
 
@@ -103,7 +98,7 @@ const Footer = () => {
             We’re more than travel-we’re adventure, exploration, and unforgettable experiences
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:col-span-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:col-span-4">
             {footerData.map((section, index) => (
               <div key={index}>
                 <h3 className="font-bold mb-4 text-white">{section.title}</h3>

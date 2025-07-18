@@ -6,16 +6,12 @@ import Link from "next/link";
 
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import ConsultationForm from './components/ConsultationForm'
 import hero1 from "../../public/hero.webp"
 import Appointmentform from './components/AppointmentForm'
 import { CalendarCheck, AlertTriangle, Repeat, Heart, Clock, UserPlus, Ban } from 'lucide-react'
    import Faq from "./components/Faq"
-
+import Testimonial from './components/Testimonials'
 import { 
-  FaAmbulance, 
-  FaUserMd, 
-  FaClock ,
   FaBrain, 
   FaClinicMedical, 
   FaTooth, 
@@ -29,57 +25,45 @@ import { useAuth } from "./context/AuthContext";
 import { useState } from "react";
 import BlogSection from './components/Blog'
 // import CarouselSpacing from "./components/Testimonials";
-export default function Home() {
-  const { ref, inView } = useInView({
-    triggerOnce: true, // Trigger only once when the component comes into view
-    threshold: 0.2, // Trigger when 20% of the element is visible
-  });
-  
-const {doctor,isLoading,user}=useAuth()
-console.log(user)
-  
-  const services = [
+ const userSteps = [
     {
-      id: 1,
-      title: "Emergency Services",
-      description: "24/7 critical care with advanced facilities and expert emergency teams.",
-      image: "/emergency.jpg",
-      icon:<FaAmbulance />
-    },
-  
-    {
-      id: 2,
-      title: "Outdoors Checkup",
-      description: "On-site health assessments for workplaces and community wellness programs.",
-      image: "/outdoors-checkup.jpg",
-      icon:<FaClinicMedical />
-
+      icon: <CalendarCheck className="w-6 h-6 text-blue-600" />,
+      title: 'Track All Your Bookings',
+      description: 'View your appointment history anytime, anywhere. when you create an account with us.',
     },
     {
-      id: 3,
-      title: "Qualified Doctors",
-      description: "Board-certified specialists for accurate diagnosis and treatment.",
-      image: "/doctors-team.jpg",
-      icon:<FaUserMd />
-
+      icon: <AlertTriangle className="w-6 h-6 text-red-500" />,
+      title: 'Emergency Booking Support',
+      description: 'Jump the line with urgent booking priority.',
     },
     {
-      id: 4,
-      title: "24 Hours Service",
-      description: "Round-the-clock medical support from our dedicated staff.",
-      image: "/24hours-service.jpg",
-      icon:<FaClock />
-
+      icon: <Repeat className="w-6 h-6 text-green-600" />,
+      title: 'ReSchedule Your Appointments Instantly',
+      description: 'Need to reschedule? Reschedule with just one click.',
     },
     {
-      id: 5,
-      title: "Others",
-      description: "Round-the-clock medical support from our dedicated staff.",
-      image: "/24hours-service.jpg",
-      icon:<FaClock />
-
-    }
-  ];
+      icon: <Heart className="w-6 h-6 text-pink-500" />,
+      title: 'Save Previous Doctors',
+      description: "Quick access to doctors you've had then reschedule an appointment with them again if you want.",
+    },
+  ]
+  const guestSteps = [
+    {
+      icon: <UserPlus className="w-6 h-6 text-blue-600" />,
+      title: 'Quick Booking Without Signup',
+      description: 'Just browse doctors, enter your info, pick a time and book an appointment.',
+    },
+    {
+      icon: <Clock className="w-6 h-6 text-yellow-600" />,
+      title: 'One-Time Access',
+      description: 'Confirm appointment via email or phone.',
+    },
+    {
+      icon: <Ban className="w-6 h-6 text-gray-600" />,
+      title: 'Limited Features',
+      description: 'No history tracking or emergency booking.',
+    },
+  ]
   const medicalDepartments = [
     {
       id: 1,
@@ -136,59 +120,31 @@ console.log(user)
       icon: <FaBone className="text-yellow-500 text-3xl" />
     },
   ];
-
-  
-  const [bookingType, setBookingType] = useState('user')
-
-  const userSteps = [
-    {
-      icon: <CalendarCheck className="w-6 h-6 text-blue-600" />,
-      title: 'Track All Your Bookings',
-      description: 'View your appointment history anytime, anywhere. when you create an account with us.',
-    },
-    {
-      icon: <AlertTriangle className="w-6 h-6 text-red-500" />,
-      title: 'Emergency Booking Support',
-      description: 'Jump the line with urgent booking priority.',
-    },
-    {
-      icon: <Repeat className="w-6 h-6 text-green-600" />,
-      title: 'ReSchedule Your Appointments Instantly',
-      description: 'Need to reschedule? Reschedule with just one click.',
-    },
-    {
-      icon: <Heart className="w-6 h-6 text-pink-500" />,
-      title: 'Save Previous Doctors',
-      description: "Quick access to doctors you've had then reschedule an appointment with them again if you want.",
-    },
-  ]
-  const guestSteps = [
-    {
-      icon: <UserPlus className="w-6 h-6 text-blue-600" />,
-      title: 'Quick Booking Without Signup',
-      description: 'Just browse doctors, enter your info, pick a time and book an appointment.',
-    },
-    {
-      icon: <Clock className="w-6 h-6 text-yellow-600" />,
-      title: 'One-Time Access',
-      description: 'Confirm appointment via email or phone.',
-    },
-    {
-      icon: <Ban className="w-6 h-6 text-gray-600" />,
-      title: 'Limited Features',
-      description: 'No history tracking or emergency booking.',
-    },
-  ]
-
-  const activeSteps = bookingType === 'user' ? userSteps : guestSteps
-
-  
   const stats = [
     { title: "30", subtitle: "years of experience" },
     { title: "25,000", subtitle: "happy clients" },
     { title: "84", subtitle: "numbers of doctors" },
     { title: "300", subtitle: "number of staff" }
   ];
+export default function Home() {
+  const { ref, inView } = useInView({
+    triggerOnce: true, // Trigger only once when the component comes into view
+    threshold: 0.2, // Trigger when 20% of the element is visible
+  });
+  
+const {doctor,isLoading}=useAuth()
+
+  
+
+  
+  const [bookingType, setBookingType] = useState('user')
+
+ 
+
+  const activeSteps = bookingType === 'user' ? userSteps : guestSteps
+
+  
+  
 
   
   return (
@@ -236,10 +192,10 @@ console.log(user)
     <section className="py-20 my-10">
           <h2 className="font-bold text-center  text-black mb-8"> Our Medical Departments </h2>
 
-<div className="grid  lg:grid-cols-3 items-center" id="deparment">
+<div className="grid  xl:grid-cols-3 items-center" id="deparment">
      <div>
      <Image
-        className=" object-cover w-full hidden lg:col-span-1 lg:block lg:h-screen  xxl:h-fit"
+        className=" object-cover w-full hidden xl:col-span-1 xl:block   xl:h-screen"
        width={1000}
        height={1000}
        src="/shake.webp"
@@ -248,7 +204,7 @@ console.log(user)
       />
      </div>
 
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:col-span-2 lg:grid-cols-3 lg:h-screen">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:col-span-2 xl:grid-cols-3 xl:h-screen">
  
  {medicalDepartments.map((department, index) => (
   <div 
@@ -345,48 +301,6 @@ console.log(user)
   </div>
 </section>
 
-{/* About */}
-
-{/* <section className="container flex flex-col gap-4 bg-[#ffffff] py-16 p-4 bg-from-l-red-400 to-r-blues-300" id="whoweare">
-     
-     <h2 className="font-bold text-center  text-black">Who We Are </h2>
-
-     <div className=" gap-8 grid md:grid-cols-2 items-center lg:container xl:gap-16">
-
-     <div>
-     <Image
-        className=" object-contain w-full "
-       width={1000}
-       height={200}
-       src="/about.jpg.webp"
-
-        alt="hero"
-      />
-     </div>
-
-     <div className="flex flex-col gap-4">
-     <h2 className="font-bold">We Are <span className="text-[#207dff]">MediPlus</span> Medical Center</h2>
-     <p>Our practice provides comprehensive healthcare services with expert physicians in a welcoming environment. With easy online booking, we ensure prompt access to quality care tailored to your needs. Your wellbeing is our focus, supported by modern facilities and compassionate professionals dedicated to your health.</p>
-
-     <div className="flex flex-col gap-3 xl:flex-row">
-     <a href="#appointment" > 
-     <button className="inline-block px-6 py-4 bg-[#207dff] text-white rounded-full font-semibold hover:bg-white border border-[#207dff] hover:text-[#207dff] transition">
-          Make an appointment
-        </button>
-        </a>
-    
-        <a href="#contact" > 
-        <button className="inline-block px-6 py-4 bg-[#fe5f55] text-white rounded-full font-semibold hover:bg-white hover:text-[#fe5f55] border border-[#fe5f55] transition">
-          Contact us
-        </button>
-        </a>
-       
-        
-        </div>
-     </div>
-
-     
-     </div>
 
 
 
@@ -394,8 +308,6 @@ console.log(user)
 
 
 
-
-     </section> */}
 
 
       
@@ -406,39 +318,7 @@ console.log(user)
 
 
 
-{/* services */}
-{/* <section className="container py-16 bg-gray-100" id="contact">
-     
- 
-     <div className="gap-8 grid lg:grid-cols-2 items-center xl:container xl:gap-16 ">
-     <div className=" flex flex-col gap-6">
-     
-      <h2 className="font-bold">Our Services</h2>
 
-      <div className="grid grid-cols-1 xl:grid-cols-2  gap-8 ">
-          {services.map((service) => (
-            <div key={service.id}  className={`${service.title=='Others'?'hidden':'flex items-top gap-4'}`}>
-              <div className="h-fit rounded-full p-4 bg-[#ffeeed] text-[#fe5f55] text-4xl" >
-               {service.icon}
-              </div>
-             <div>  <h2 className="text-xl font-semibold mb-2 text-gray-800">{service.title}</h2>
-              <p className="text-gray-600">{service.description}</p></div>
-            </div>
-          ))}
-        </div>
-     
-
-     </div>
-
-    
-     <ConsultationForm />
-
-     
-     </div>
-
-     </section> */}
-   
-    {/* qualified doctors */}
 
  <section  className="container bg-white flex flex-col gap-12 py-16 md:py-20 lg:container">
 <div className="flex text-center  flex-col gap-4 items-center justify-center"><h2 className="font-bold">Our Qualified Doctors
@@ -499,7 +379,7 @@ Meet our trusted specialists dedicated to your care. Explore profiles of board-c
         
         </p>
         <div className="mt-auto">
-         <Link href={`/doctor-details/${doc._id}`}>
+         <Link href={`/doctors/${doc._id}`}>
          <button className="px-6 w-full py-3 mt-1 bg-[#207dff] text-white rounded font-semibold hover:bg-blue-700 transition">
           View Doctor
           </button>
@@ -543,9 +423,9 @@ Meet our trusted specialists dedicated to your care. Explore profiles of board-c
   <div className="hidden md:block">
     
         
-        <a href="/doctors" > <button className="inline-block px-6 py-4 bg-black text-white rounded-full font-semibold hover:bg-white border border-[#207dff] hover:text-[#207dff] transition">
+        <Link href="/doctors" > <button className="inline-block px-6 py-4 bg-black text-white rounded-full font-semibold hover:bg-white border border-[#207dff] hover:text-[#207dff] transition">
           Make an appointment
-        </button></a></div>
+        </button></Link></div>
 
   </div>
 
@@ -583,8 +463,7 @@ Meet our trusted specialists dedicated to your care. Explore profiles of board-c
       
 </div>
 </div>
-
-{/* <CarouselSpacing /> */}
+<Testimonial />
 {/* your health is our piority */}
 <section className="relative py-20  flex flex-col items-center justify-center min-h-fit">
   {/* Background Image */}
@@ -609,11 +488,11 @@ Meet our trusted specialists dedicated to your care. Explore profiles of board-c
       </p>
       <div>
        
-        <a href="/doctors" > 
+        <Link href="/doctors" > 
      <button className="inline-block px-6 py-4 bg-[#207dff] text-white rounded-full font-semibold hover:bg-white border border-[#207dff] hover:text-[#207dff] transition">
           Make an appointment
         </button>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
@@ -634,41 +513,7 @@ Meet our trusted specialists dedicated to your care. Explore profiles of board-c
 
 {/* blogs */}
 <BlogSection />
-{/* <section className="container flex flex-col bg-[#ffffff] gap-12 py-16 md:py-20">
-<div className="flex text-center  flex-col gap-4 items-center justify-center"><h2 className="font-bold"> Get Every Single Updates Here
-</h2>
-<p className="text-[#999999] max-w-4xl">
-  Discover valuable health insights and practical wellness tips through our expert-curated articles. 
-  Stay informed about the latest medical advancements and preventive care strategies.
-</p></div>
-<div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:container">
-  {blogPosts.map((post, index) => (
-    <div 
-      key={index} 
-      className="blog-post flex flex-col gap-4 p-4 border border-gray-200 rounded-lg"
-    >
-      <Image src={post.img} alt={post.title} width={1000} height={400}/>
-      <div className="flex flex-col flex-grow gap-4">
-        <p className="text-gray-500 min-h-[1.5rem]">{post.date}</p>
-        <h3 className="text-xl font-bold min-h-[3rem] line-clamp-2">{post.title}</h3>
-        <p className="text-gray-600 line-clamp-3">{post.excerpt}</p>
-      </div>
 
-      <div className="mt-auto">
-        <button className="px-6 py-3 bg-[#207dff] text-white rounded-full font-semibold hover:bg-blue-700 transition">
-          Read more
-        </button>
-      </div>
-    </div>
-  ))}
-</div>
-<div className="flex items-center justify-center">
-  <Link href={`/blogs`}>  <button className="px-6 py-3 mt-1 bg-[#207dff] text-white rounded-full font-semibold hover:bg-blue-700 transition">
-         View All Blogs
-          </button></Link>
-          
-          </div>
-</section> */}
 
       
 

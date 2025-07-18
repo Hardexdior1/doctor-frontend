@@ -2,10 +2,8 @@
 import { useState } from "react";
 import { useAuth } from "@/app/context/AuthContext";
 import endpointroute from "@/app/utils/endpointroute";
-import { useRouter } from "next/navigation";
 export default function UserProfile() {
 
-    const router=useRouter()
     const {user,setUser}=useAuth()
 
   const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +24,7 @@ export default function UserProfile() {
     if(formData.username.trim()!=="")
         {
         try {
-            const res=await endpointroute.patch('/edit-profile',formData,
+          await endpointroute.patch('/edit-profile',formData,
                 {
                     withCredentials: true,
                 }

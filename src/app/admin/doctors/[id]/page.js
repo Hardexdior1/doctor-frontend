@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import endpointroute from '../../../utils/endpointroute'
 import Image from 'next/image'
-import { useAuth } from '@/app/context/AuthContext'
 const DoctorPage = () => {
   const { id } =  useParams()
   const [data, setData] = useState({
@@ -33,7 +32,7 @@ const DoctorPage = () => {
     
         // Sort reviews by date (oldest first)
         const sortedReviews = response.data.review?.sort((a, b) => 
-          new Date(a.createdAt) - new Date(b.createdAt)
+          new Date(b.createdAt) - new Date(a.createdAt)
         ) || []
 
 
@@ -57,7 +56,6 @@ const DoctorPage = () => {
     if (id) fetchDoctorRecords()
   }, [id])
 
-  const { user } = useAuth();
 
   // Pagination logic
   const indexOfLastReview = currentPage * reviewsPerPage
@@ -135,15 +133,26 @@ const DoctorPage = () => {
 
 {/* <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8"> */}
   return <div className="flex flex-col  lg:flex-row" key={0+1}>
-    <div className="w-full lg:w-1/4 relative h-[450px] " >
+    {/* <div className="w-full lg:w-1/4 relative h-[450px] " >
       <Image 
         src={item.image || '/doctor-placeholder.jpg'}
         alt={item.name}
         fill
         className="object-cover w-full"
         priority
+        
       />
-    </div>
+    </div> */}
+
+    <div className="w-full md:w-1/4 relative h-[400px] bg-black md:h-[300px]" >
+          <Image 
+            src={item.image || '/doctor-placeholder.jpg'}
+            alt={item.name||'doctor'}
+            fill
+            className="object-cover w-full"
+            priority
+          />
+        </div>
 
     <div className="w-full md:w-2/3 p-6">
       <div className="flex flex-col h-fit">

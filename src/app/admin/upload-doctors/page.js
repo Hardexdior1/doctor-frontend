@@ -7,23 +7,23 @@ import "react-toastify/dist/ReactToastify.css";
 import endpointroute from "../../utils/endpointroute";
 import Image from 'next/image'
 const specialtyOptions = [
-  { value: 'cardiology', label: 'Cardiology' },
-  { value: 'neurology', label: 'Neurology' },
-  { value: 'pediatrics', label: 'Pediatrics' },
-  { value: 'dermatology', label: 'Dermatology' },
-  { value: 'orthopedics', label: 'Orthopedics' },
-  { value: 'radiology', label: 'Radiology' },
-  { value: 'psychiatry', label: 'Psychiatry' },
-  { value: 'anesthesiology', label: 'Anesthesiology' },
-  { value: 'urology', label: 'Urology' },
-  { value: 'gynecology', label: 'Gynecology' },
-  { value: 'gastroenterology', label: 'Gastroenterology' },
-  { value: 'endocrinology', label: 'Endocrinology' },
-  { value: 'nephrology', label: 'Nephrology' },
-  { value: 'oncology', label: 'Oncology' },
-  { value: 'rheumatology', label: 'Rheumatology' },
-  { value: 'pulmonology', label: 'Pulmonology' },
-  { value: 'general', label: 'General Practice' },
+  { value: 'Cardiologist', label: 'Cardiologist' },
+  { value: 'Neurologist', label: 'Neurologist' },
+  { value: 'Pediatrician', label: 'Pediatrician' },
+  { value: 'Dermatologist', label: 'Dermatologist' },
+  { value: 'Orthopedic Surgeon', label: 'Orthopedic Surgeon' },
+  { value: 'Radiologist', label: 'Radiologist' },
+  { value: 'Psychiatrist', label: 'Psychiatrist' },
+  { value: 'Anesthesiologist', label: 'Anesthesiologist' },
+  { value: 'Urologist', label: 'Urologist' },
+  { value: 'Gynecologist', label: 'Gynecologist' },
+  { value: 'Gastroenterologist', label: 'Gastroenterologist' },
+  { value: 'Endocrinologist', label: 'Endocrinologist' },
+  { value: 'Nephrologist', label: 'Nephrologist' },
+  { value: 'Oncologist', label: 'Oncologist' },
+  { value: 'Rheumatologist', label: 'Rheumatologist' },
+  { value: 'Pulmonologist', label: 'Pulmonologist' },
+  { value: 'General Practitioner', label: 'General Practitioner' },
 ];
 
 const DoctorPage = () => {
@@ -143,7 +143,7 @@ setImage(file);
   value={specialty}
   onChange={(e) => setSpecialty(e.target.value)}
 >
-  <option value="">Select your specialty</option>
+  <option value="">Doctor specialty</option>
   {specialtyOptions.map((item, index) => (
     <option value={item.value} key={index}>
       {item.label}

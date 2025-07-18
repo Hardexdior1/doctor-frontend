@@ -17,7 +17,7 @@ export default function DoctorsList() {
       setLoading(true)
       try {
         const res = await endpointroute.get("/all-doctors");
-        setDoctors(res.data);
+        setDoctors(res.data.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)));
       } catch (error) {
         console.log("Failed to fetch doctors:", error);
       } finally {
@@ -159,7 +159,7 @@ setDeleteDoc(false)
         <Image
           src={doctor.image}
           alt={doctor.name}
-          className="rounded-full object-cover h-fit border"
+          className="rounded-full object-cover h-fit border h-14 w-14"
           width={50}
           height={50}
         />

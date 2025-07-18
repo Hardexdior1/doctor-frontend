@@ -6,13 +6,16 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Image from 'next/image'
 import endpointroute from '@/app/utils/endpointroute'
+import {  ChevronLeft,   } from "lucide-react";
+import Link from 'next/link'
 const Doctor =  ({doctor}) => {
   const { id } = useParams()
 
-console.log(doctor)
+console.log( 'fulldoctor', doctor)
   const sortedReviews = doctor.review?.sort((a, b) => 
-    new Date(a.createdAt) - new Date(b.createdAt)
+    new Date(b.createdAt) - new Date(a.createdAt)
   ) || []
+
   const [data, setData] = useState({
     reviews: sortedReviews,
     doctor: doctor.doctor || null,
@@ -66,7 +69,7 @@ setLoadingReview(true)
   
       setData(prev => {
         const updatedReviews = [...prev.reviews, newReview].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
         )
         const updatedTotal = prev.totalReviews ? prev.totalReviews + 1 : updatedReviews.length
   
@@ -80,12 +83,7 @@ setLoadingReview(true)
       setReviewForm({ name: '', message: '' })
       toast.success('Review submitted successfully!')
     console.log(response)
-      // Scroll to last page if review is not visible
-      // setTimeout(() => {
-      //   const newTotalReviews = data.totalReviews + 1
-      //   const newTotalPages = Math.ceil(newTotalReviews / reviewsPerPage)
-      //   setCurrentPage(newTotalPages)
-      // }, 100)
+     
       setLoadingReview(false)
 
     } catch (err) {
@@ -144,9 +142,9 @@ setLoadingReview(true)
   return (
     <main className="container mx-auto py-28">
       <ToastContainer />
-      
-  
-<div className="bg-white border rounded-lg shadow-md overflow-hidden mb-8">
+   <Link href={`/doctors`}>   <ChevronLeft /></Link>
+
+<div className="bg-white border rounded-lg shadow-md overflow-hidden mb-8 mt-3">
   <div className="flex flex-col md:flex-row">
     <div className="w-full md:w-1/4 relative h-[400px] bg-black md:h-[300px]" >
       <Image 
@@ -236,7 +234,7 @@ setLoadingReview(true)
 
     {currentReviews.length > 0 ? (
       <div className="py-6 max-h-[400px] overflow-y-auto w-full">
-        {currentReviews.map((review) => {
+        {currentReviews.sort().map((review) => {
           return (
             <div key={review._id} className="border-b border-gray-100 pb-6 last:border-0">
               <div className="flex items-center gap-4 mb-3">
@@ -435,7 +433,7 @@ setLoadingReview(true)
   className={`w-full text-white font-medium py-2 px-4 rounded-lg transition ${loadingReview ? 'bg-gray-400 cursor-not-allowed' : 'bg-[#207dff] hover:bg-[#1a6bd9]'}`}
   disabled={loadingReview} // This disables the button when loadingReview is true
 >
-  {loadingReview ? 'Loading...' : 'Submit Review'} {/* Show "Loading..." text when loading */}
+  {loadingReview ? 'submitting...' : 'Submit Review'} {/* Show "Loading..." text when loading */}
 </button>
 
                 </form>
@@ -513,7 +511,7 @@ setLoadingReview(true)
                     Book Appointment
                   </button> */}
 
-                  {doctor.isActive ? (
+                  {data.doctor.isActive ? (
         <button
   type="submit"
   disabled={loadingAPpointment}
@@ -523,7 +521,7 @@ setLoadingReview(true)
       : 'bg-black hover:bg-gray-800 text-white'
     }`}
 >
-  {loadingAPpointment ? 'Booking...' : 'Book Appointment'} {doctor.isActive}
+  {loadingAPpointment ? 'Booking...' : 'Book Appointment'} 
 </button>
 ) : (
   <button

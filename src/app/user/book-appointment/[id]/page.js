@@ -1,5 +1,4 @@
 
-import React from "react"
 // import Doctor from './components/Doctor'
 import { notFound } from 'next/navigation';
 import endpointroute from "../../../utils/endpointroute";

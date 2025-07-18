@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Modal = ({ handleToggleModal, doctor,setDoctors,doctors }) => {
+const Modal = ({ handleToggleModal, doctor,setDoctors }) => {
   const [formData, setFormData] = useState({
     name: doctor.name || "",
     email: doctor.email || "",

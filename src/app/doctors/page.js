@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
+
 const Doctors = () => {
   const { doctor, isLoading } = useAuth();
   const [doctors, setDoctors] = useState(doctor);
@@ -81,8 +82,13 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
   : "Dr. " + doctorName.charAt(0).toUpperCase() + doctorName.slice(1);
   return formattedName
 }
+
+
+
+
   return (
     <main className="container">
+
       <div className="pt-28 grid gap-5 md:grid-cols-5">
         {/* Filter Sidebar */}
         <div className="w-full hidden md:flex flex-col gap-5 md:col-span-1 border-2 sticky top-5 bg-white self-start h-fit">
@@ -175,7 +181,11 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
         </div>
 
         {/* Doctor Cards */}
+       <>
+       {!isLoading&&doctorLists.length==0&&<div className='flex items-center justify-center text-center margin-auto'>
+  No doctor found for you search</div>}
         <div className="transition grid gap-5 grid-cols-2 md:grid-cols-2 lg:grid-cols-4  md:col-span-4">
+          
           {isLoading
             ? Array.from({ length: 4 }).map((_, index) => (
                 <div
@@ -224,11 +234,14 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
                   </div>
                 </div>
               ))}
-        </div>
+        </div></>
       </div>
 
 
-      <div className="flex flex-col items-center justify-center gap-5 mb-5 py-5 md:flex-row">
+
+    {isLoading?<></>: <>
+    
+    {doctorLists.length>0&& <div className="flex flex-col items-center justify-center gap-5 mb-5 py-5 md:flex-row">
   <button
     onClick={() => {
       setCurrentPage(currentPage - 1);
@@ -261,7 +274,13 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
   >
     Next
   </button>
-</div>
+</div>}
+    
+    </>
+    
+   
+
+}
 
     </main>
   );
