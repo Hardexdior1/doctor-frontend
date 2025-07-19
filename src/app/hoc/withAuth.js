@@ -89,13 +89,13 @@ const withAuth = (WrappedComponent, allowedRoles = []) => {
 
           if (!loggedinUser || (allowedRoles.length && !allowedRoles.includes(loggedinUser.role))) {
             toast.error("Unauthorized access");
-            router.push("/auth");
+            // router.push("/auth");
           }
 
         } catch (error) {
           toast.error(error?.response?.data?.message || "Authentication failed");
           console.log('error',error)
-          router.push("/auth");
+          // router.push("/auth");
         } finally {
           setLoading(false);
         }

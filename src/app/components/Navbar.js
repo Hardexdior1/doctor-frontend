@@ -41,7 +41,7 @@ console.log('pathname',pathname)
   
   <main>
     
-      <header className={`${pathname=='/auth'?``:`z-40`} ${pathname.includes('doctors')?`border-b`:``} ${isScrolled?'border-b':''} ${shouldShowBorder?'border-b':""} fixed backdrop-blur top-0 right-0 left-0  bg-white  bg-opacity-30 w-full transition-all py-5 duration-300 bg-opacity-85 bg-white  lg:container `}>
+      <header className={`${pathname=='/auth'?`z-40`:`z-40`} ${pathname.includes('doctors')?`border-b`:``} ${isScrolled?'border-b':''} ${shouldShowBorder?'border-b':""} fixed backdrop-blur top-0 right-0 left-0  bg-white  bg-opacity-30 w-full transition-all py-5 duration-300 bg-opacity-85 bg-white  lg:container `}>
       {/* Desktop Navigation */}
       <nav className="container px-4 flex justify-between items-center">
         {/* Logo */}

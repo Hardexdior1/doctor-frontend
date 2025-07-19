@@ -23,7 +23,7 @@ const quicksand = Quicksand({
   display: 'swap', // prevents layout shift
 });
 export const metadata: Metadata = {
-  title: "Medicare- Book Trusted Doctors Online",
+  title: "Mediplus- Book Trusted Doctors Online",
   description: "Find and book certified doctors, read patient reviews, and manage appointments easily on our trusted medical platform.",
 };
 
