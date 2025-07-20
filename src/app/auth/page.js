@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useAuth } from '../context/AuthContext';
 import { Eye, EyeOff, HeartPulse, Stethoscope, Syringe } from 'lucide-react';
-
+import endpointroute from '../utils/endpointroute';
 export default function LoginPage() {
 
   return (
@@ -56,9 +56,36 @@ export default function LoginPage() {
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { handleLogin, lodingLogin, username, password , setUserName, setPassWord } = useAuth();
+const checkAuth = async () => {
+        try {
+          // setLoading(true);
+          const response = await endpointroute.get("/auth/status", {
+            withCredentials: true
+            // withCredentials: true,
+          });
+
+          const loggedinUser = response.data.user;
+          // setUser(loggedinUser);
+          console.log(loggedinUser)
+
+          if (!loggedinUser || (allowedRoles.length && !allowedRoles.includes(loggedinUser.role))) {
+            console.log("Unauthorized access");
+            // router.push("/auth");
+          }
+          // setLoading(false)
+
+        } catch (error) {
+          console.log(error?.response?.data?.message || "Authentication failed");
+          console.log('error',error)
+          // router.push("/auth");
+        } finally {
+          console.log('hello world')
+        }
+      };
 
   return (
     <form onSubmit={handleLogin} className="space-y-5">
+      <button onClick={checkAuth}>hello</button>
       <div>
         <label className="text-sm text-gray-600 mb-1 block">Username</label>
         <input
