@@ -56,32 +56,32 @@ export default function LoginPage() {
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const { handleLogin, lodingLogin, username, password , setUserName, setPassWord } = useAuth();
-const checkAuth = async () => {
-        try {
-          // setLoading(true);
-          const response = await endpointroute.get("/auth/status", {
-            withCredentials: true
-            // withCredentials: true,
-          });
+// const checkAuth = async () => {
+//         try {
+//           // setLoading(true);
+//           const response = await endpointroute.get("/auth/status", {
+//             withCredentials: true
+//             // withCredentials: true,
+//           });
 
-          const loggedinUser = response.data.user;
-          // setUser(loggedinUser);
-          console.log(loggedinUser)
+//           const loggedinUser = response.data.user;
+//           // setUser(loggedinUser);
+//           console.log(loggedinUser)
 
-          if (!loggedinUser || (allowedRoles.length && !allowedRoles.includes(loggedinUser.role))) {
-            console.log("Unauthorized access");
-            // router.push("/auth");
-          }
-          // setLoading(false)
+//           if (!loggedinUser || (allowedRoles.length && !allowedRoles.includes(loggedinUser.role))) {
+//             console.log("Unauthorized access");
+//             // router.push("/auth");
+//           }
+//           // setLoading(false)
 
-        } catch (error) {
-          console.log(error?.response?.data?.message || "Authentication failed");
-          console.log('error',error)
-          // router.push("/auth");
-        } finally {
-          console.log('hello world')
-        }
-      };
+//         } catch (error) {
+//           console.log(error?.response?.data?.message || "Authentication failed");
+//           console.log('error',error)
+//           // router.push("/auth");
+//         } finally {
+//           console.log('hello world')
+//         }
+//       };
 
   return (
     <form onSubmit={handleLogin} className="space-y-5">
