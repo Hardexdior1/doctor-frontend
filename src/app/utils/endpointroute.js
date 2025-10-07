@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const endpointroute = axios.create({
-  baseURL: "http://localhost:5000/api",
-  // baseURL: "https://doctor-backend-x7dv.onrender.com/api",
+  baseURL: "https://doctor-backend-x7dv.onrender.com/api",
 });
 
 endpointroute.interceptors.request.use((config) => {
