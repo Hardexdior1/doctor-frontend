@@ -25,15 +25,15 @@ export default function LoginPage() {
   <p className="font-semibold text-base">Demo Credentials</p>
 
   <div>
-    <p className="font-medium">🔐 Admin</p>
+    <p className="font-medium"> Admin</p>
     <p>Username: <span className="font-semibold">admin</span></p>
     <p>Password: <span className="font-semibold">admin</span></p>
   </div>
 
   <div className="pt-2 border-t border-blue-100">
-    <p className="font-medium">👤 User</p>
-    <p>Username: <span className="font-semibold">Quwam10</span></p>
-    <p>Password: <span className="font-semibold">password</span></p>
+    <p className="font-medium"> User</p>
+    <p>Username: <span className="font-semibold">quwam</span></p>
+    <p>Password: <span className="font-semibold">123456</span></p>
   </div>
 </div>
 
@@ -43,8 +43,8 @@ export default function LoginPage() {
   position="top-right"
   marginTop="50px"
   toastContainerStyle={{
-    marginTop: '80px', // adjust based on your navbar height
-    zIndex: 9999 // ensures it's above the navbar
+    marginTop: '80px', 
+    zIndex: 9999 
   }}
 />
 
@@ -85,7 +85,7 @@ const checkAuth = async () => {
 
   return (
     <form onSubmit={handleLogin} className="space-y-5">
-      <button onClick={checkAuth}>hello</button>
+      {/* <button onClick={checkAuth}>hello</button> */}
       <div>
         <label className="text-sm text-gray-600 mb-1 block">Username</label>
         <input

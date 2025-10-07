@@ -19,7 +19,7 @@ const Doctors = () => {
         setIsLoading(false)
 
       } catch (error) {
-        console.error("Failed to fetch data:", error)
+        console.log("Failed to fetch data:", error)
         setIsLoading(false)
 
       }
@@ -81,30 +81,7 @@ const Doctors = () => {
     );
   };
   
-//   const getStatusButton = (appointmentDate) => {
-//     const today = new Date();
-//     const appointmentDateObj = new Date(appointmentDate);
-    
-//     if (appointmentDateObj < today) {
-//       return (
-//         <button className="bg-gray-400 text-white px-4 py-2 rounded-lg">
-//           Past Appointment
-//         </button>
-//       );
-//     } else if (appointmentDateObj.toDateString() === today.toDateString()) {
-//       return (
-//         <button className="bg-yellow-500 text-white px-4 py-2 rounded-lg">
-//           Today's Appointment
-//         </button>
-//       );
-//     } else {
-//       return (
-//         <button className="bg-green-500 text-white px-4 py-2 rounded-lg">
-//           Upcoming Appointment
-//         </button>
-//       );
-//     }
-//   };
+
 const formartDocName=(doctorName)=>{
   let doctor=doctorName.trim().split(' ')[1]||[0]
 let formattedName = doctor.toLowerCase().startsWith("dr")
@@ -221,12 +198,7 @@ let formattedName = doctor.toLowerCase().startsWith("dr")
         </div>
       )}
 
-{/* {comingAppointments.map((item,index)=>{
-  return <div key={index}>
-    <p> {item.name} </p>
 
-  </div>
-})} */}
        {activeTab === "coming" && (
       comingAppointments?.length==0?<div className="text-center py-20 text-gray-500">
       <p className="text-3xl mb-2">📅</p>

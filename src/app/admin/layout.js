@@ -59,13 +59,13 @@ const {user,handleLogout,loadingLogOut,showLogOut,setShowLogout}=useAuth()
   {/* Right: Username + Cool Phrase */}
   <p className="text-right hidden md:block text-white font-semibold">
     {user.username.charAt(0).toUpperCase()}
-    {user.username.slice(1).toLowerCase()} ⚡
+    {user.username.slice(1).toLowerCase()} 
   </p>
 </div>
   </div>
 
 
-       <div className="flex h-screen bg-gray-50">
+       <div className="flex h-screen  bg-gray-50">
       {/* Mobile Sidebar Toggle */}
       
      {mobileOpen?  <button
@@ -85,9 +85,9 @@ const {user,handleLogout,loadingLogOut,showLogOut,setShowLogout}=useAuth()
   className={`
     bg-blue-700
       overflow-x-y-scroll text-white fixed  h-full left-0 top-0
-    transition-all duration-300
+    transition-all duration-300 z-30
     ${isCollapsed ? 'w-20' : 'w-64'}
-    ${mobileOpen ? 'translate-y-0 z-40 ' : '-translate-y-full z-40 md:translate-y-0'}
+    ${mobileOpen ? 'translate-y-0 z-30 ' : '-translate-y-full z-30 md:translate-y-0'}
   `}
 >
   <div className="p-4 flex items-center justify-between border-b border-white/20 h-16">
@@ -143,7 +143,7 @@ const {user,handleLogout,loadingLogOut,showLogOut,setShowLogout}=useAuth()
 </aside>
 
       {/* Main Content */}
-      <main className="flex-1 z-40 overflow-auto md:transition-all duration-300 sm:my-0 xl:overflow-visible">
+      <main className="flex-1  overflow-auto md:transition-all duration-300 sm:my-0 xl:overflow-visible">
         <div className="p-6">
           <div className="flex justify-between items-center gap-2 mb-8">
        

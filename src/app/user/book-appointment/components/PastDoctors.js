@@ -28,7 +28,7 @@ const PastDoctors = ({ pastDoctors,setActiveTab }) => {
 
       {pastDoctors.length === 0 ? (
         <div className="text-center py-20">
-          <p className="text-gray-600 text-lg mb-4">You have no past appointments yet.</p>
+          <p className="text-gray-600 text-lg mb-4">You have no past doctors yet.</p>
           {/* <Link href="/doctors"> */}
             <button onClick={(()=>{
                 setActiveTab('browse')

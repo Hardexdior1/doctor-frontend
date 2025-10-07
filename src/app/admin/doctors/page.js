@@ -159,7 +159,7 @@ setDeleteDoc(false)
         <Image
           src={doctor.image}
           alt={doctor.name}
-          className="rounded-full object-cover h-fit border h-14 w-14"
+          className="rounded-full object-cover  border h-14 w-14"
           width={50}
           height={50}
         />

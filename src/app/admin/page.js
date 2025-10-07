@@ -57,15 +57,15 @@ const Page = () => {
   const overviewStats = [
     {
       title: "Total Doctors",
-      count: doctors.length?doctors.length:'loading..',
+      count: loading?'loading..':doctors.length,
     },
     {
       title: "Total Appointments",
-      count: appointments.length?appointments.length:'loading..',
+      count: loading?'loading..':appointments.length,
     },
     {
       title: "Total Reviews",
-      count: reviews.length?reviews.length:'loading..',
+      count: loading?'loading..':reviews.length,
     },
   ];
 
@@ -212,7 +212,7 @@ const Page = () => {
 
 
 
-<div className="flex flex-col items-center justify-center gap-5 mb-5 py-5 md:flex-row">
+{appointments.length>0?<div className="flex flex-col items-center justify-center gap-5 mb-5 py-5 md:flex-row">
   <button
     onClick={() => {
       setCurrentPage(currentPage - 1);
@@ -245,7 +245,7 @@ const Page = () => {
     Next
   </button>
 </div>
-
+: <div className="flex flex-col items-center justify-center gap-5 mb-5 py-5 md:flex-row"> <p>No appointments found</p></div>}
 
     </main>
   );

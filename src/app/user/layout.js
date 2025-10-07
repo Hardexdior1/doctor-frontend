@@ -57,7 +57,7 @@ const {user,handleLogout,loadingLogOut,showLogOut,setShowLogout}=useAuth()
   {/* Right: Username + Cool Phrase */}
   <p className="text-right hidden md:block text-white font-semibold">
     {user.username.charAt(0).toUpperCase()}
-    {user.username.slice(1).toLowerCase()} ⚡
+    {user.username.slice(1).toLowerCase()} 
   </p>
 </div>
   </div>

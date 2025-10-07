@@ -184,7 +184,7 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
        <>
        {!isLoading&&doctorLists.length==0&&<div className='flex items-center justify-center text-center margin-auto'>
   No doctor found for you search</div>}
-        <div className="transition grid gap-5 grid-cols-2 md:grid-cols-2 lg:grid-cols-4  md:col-span-4">
+        <div className="transition grid gap-5 grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  md:col-span-4">
           
           {isLoading
             ? Array.from({ length: 4 }).map((_, index) => (
@@ -214,7 +214,7 @@ let formattedName = doctorName.toLowerCase().startsWith("dr")
                     // height={600}
                     width={1000}
   height={600}
-  className="w-full  sm:h-72 md:h-50 object-cover rounded-tl-lg rounded-tr-lg "
+  className="w-full h-40 sm:h-72 md:h-50 object-cover rounded-tl-lg rounded-tr-lg "
                     // className="rounded-t-lg object-cover"
                   />
                   <div className="flex flex-col gap-1 py-2 px-2">

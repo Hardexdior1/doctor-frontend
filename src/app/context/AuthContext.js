@@ -37,39 +37,45 @@ export const AuthProvider=({children})=>{
     const [password,setPassWord] = useState('');
     //  const [username] = useState('admin');
     // const [password] = useState('admin');
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setLoadingLogin(true);
-      
-      try {
-        const response = await endpointroute.post("/auth/login",{
-          username,
-          password
-        });
-        
-        const loggedinUser = response.data.user;
-        console.log('user',response.data.user)
-        setUser(loggedinUser);
-        router.push(loggedinUser.role=="admin"?'/admin':'/user');
-        toast.success("Login successful! Redirecting...");
-      } catch (error) {
-        console.log("Login failed:", error);
-        toast.error(error.response?.data?.msg || "Login failed. Please try again.");
-      } finally {
-        setLoadingLogin(false);
-      }
-    };
+   const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoadingLogin(true);
+  
+  try {
+    const response = await endpointroute.post("/auth/login", {
+      username,
+      password,
+    });
+    
+    const { user, token } = response.data;
+
+    //  Save token locally
+    localStorage.setItem("token", token);
+
+    setUser(user);
+    toast.success("Login successful! Redirecting...");
+
+    // redirect based on role
+    router.push(user.role === "admin" ? "/admin" : "/user");
+    
+  } catch (error) {
+    console.log("Login failed:", error);
+    toast.error(error.response?.data?.msg || "Login failed. Please try again.");
+  } finally {
+    setLoadingLogin(false);
+  }
+};
+
  const [loadingLogOut,setLoadingLogOut]=useState(false)
       const [showLogOut,setShowLogout]=useState(false)
 
   
 
-     const handleLogout=async()=>{
+     const handleLogout=()=>{
 
-    try { 
+  
       setLoadingLogOut(true)
-const response=await endpointroute.post('/logout ')
-toast.success(response.data.message||"Logout successful")
+toast.success("Logout successful")
 setShowLogout(false)
 setLoadingLogOut(false)
 localStorage.removeItem('user')
@@ -79,14 +85,7 @@ setUser(null)
 // setUser(null)
 
       
-    } catch (error) {
-      console.log(error?.response?.data?.message||"oops. something went wrong, try again.")
-      console.log(error)
-      setLoadingLogOut(false)
-      setShowLogout(false)
-      toast.error(error?.response?.data?.message||"oops. something went wrong, try again.")
-
-    }
+  
    }
    
     return <AuthContext.Provider value={{user,setUser,doctor,setDoctors,isLoading,handleLogin,lodingLogin,username,password,handleLogout,loadingLogOut,showLogOut,setShowLogout, setUserName,setPassWord}}>
